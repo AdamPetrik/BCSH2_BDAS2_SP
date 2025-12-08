@@ -3,8 +3,9 @@
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-02 18:34:44 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
 </engineerTo>
 <adequatelyNormalized>NO</adequatelyNormalized>
 <expectedVolumes>0</expectedVolumes>
@@ -19,8 +20,9 @@
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-02 18:34:53 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
@@ -31,8 +33,9 @@
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-02 18:59:01 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
 </engineerTo>
 <constraintName>order_type_constraint</constraintName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -45,12 +48,25 @@
 </listOfValues>
 <ownDataTypeParameters>8,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="created_at" id="C9C06257-5C87-3B2F-C5C9-0CDDA363C7DD">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-08 14:37:24 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 <Attribute name="price" id="4DDC4D36-00E3-159A-A1EC-CCB5254F7C8A">
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-02 18:35:16 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
@@ -61,8 +77,9 @@
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-03 19:50:07 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
 </engineerTo>
 <constraintName>order_method_constraint</constraintName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -79,24 +96,11 @@
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-02 18:37:26 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
 </engineerTo>
 <nullsAllowed>true</nullsAllowed>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="user_id" id="4E11CEE6-3143-615A-80E5-13D8402D1F8D">
-<createdBy>Adam Petřík</createdBy>
-<createdTime>2025-11-24 19:47:55 UTC</createdTime>
-<generatorID>FF0474DD-E812-CD00-DE6A-39449C72978D</generatorID>
-<ownerDesignName>model</ownerDesignName>
-<engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
-</engineerTo>
-<referedAttribute>5301506B-72A6-164A-EDB2-5043D4D64DD7</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
@@ -108,8 +112,9 @@
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-02 18:35:04 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <newElementsIDs>76440277-6471-7935-9B79-31BC09FF337A</newElementsIDs>

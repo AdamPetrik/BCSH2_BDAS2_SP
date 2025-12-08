@@ -30,17 +30,6 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="user_id" id="117179A5-2515-8C01-1534-7F00635519C8">
-<createdBy>Adam Petřík</createdBy>
-<createdTime>2025-12-05 17:09:36 UTC</createdTime>
-<generatorID>D28F1E7D-2EDC-47DE-87C1-4565B1836F92</generatorID>
-<ownerDesignName>model</ownerDesignName>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<autoIncrementCycle>false</autoIncrementCycle>
-</Column>
 <Column name="action" id="2743B9F1-0E45-BC60-8808-3AB6844F21DE">
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-12-05 17:09:36 UTC</createdTime>
@@ -65,6 +54,21 @@
 <ownDataTypeParameters>32,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="user_id" id="80236110-00F1-B2A9-28BC-EFF95A9F81F8">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-08 13:41:44 UTC</createdTime>
+<generatorID>7FDCD7E5-07B8-2454-1066-44652E57090C</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A6C9F0F9-5D0F-07DC-25C0-7E45C90963C1" referredColumn="DB3A4961-E099-B06F-52F3-89DEFF976673"/>
+</associations>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="784D1A44-F5AA-E53D-7BAD-8D5842F9825A" name="LOG_PK">
@@ -77,6 +81,17 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="D8384141-C522-1F79-42E4-3756999DFF6E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D3CE2F45-9E83-C024-428B-C0B8A25A548B" name="LOG_USER_FK">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-08 13:41:44 UTC</createdTime>
+<generatorID>B83431CD-482D-CC44-6975-9298EBB0CCB5</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="80236110-00F1-B2A9-28BC-EFF95A9F81F8"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

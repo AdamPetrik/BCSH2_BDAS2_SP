@@ -76,6 +76,23 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="logged_in" id="55CB26CC-775D-FF8F-A847-0E4E1E874819">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-08 13:14:12 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+</engineerTo>
+<constraintName>LOGGED_IN_CONSTRAINT_CHECK</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<listOfValues>
+<valueDef value="0" description=""/>
+<valueDef value="1" description=""/>
+</listOfValues>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 <Attribute name="note" id="C4E9ACEA-F746-0BF3-EAEE-064B7552F14B">
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-02 17:29:59 UTC</createdTime>
@@ -91,18 +108,4 @@
 <ownDataTypeParameters>200,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
-<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="106CC65A-82AD-EFC7-54B5-AA1B632B442B" name="USER PK">
-<createdBy>Adam Petřík</createdBy>
-<createdTime>2025-11-24 19:47:53 UTC</createdTime>
-<ownerDesignName>model</ownerDesignName>
-<engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
-</engineerTo>
-<pk>true</pk>
-<usedAttributes>
-<attributeRef>5301506B-72A6-164A-EDB2-5043D4D64DD7</attributeRef>
-</usedAttributes>
-</identifier>
-</identifiers>
 </Entity>

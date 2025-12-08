@@ -71,6 +71,21 @@
 <colAssociation fkAssociation="346E2DE6-F5DF-2615-F7E5-19B1A1DC16D7" referredColumn="C7C27FAC-8C4F-8CC4-CC6B-0F1D16F82A43"/>
 </associations>
 </Column>
+<Column name="logged_in" id="AD79EF00-4C07-9541-6212-46A4B81185B8">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-08 13:19:14 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<constraintName>LOGGED_IN_CONSTRAINT_CHECK</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<listOfValues>
+<valueDef value="0" description=""/>
+<valueDef value="1" description=""/>
+</listOfValues>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 <Column name="note" id="1FE6F4CB-160C-CCA2-95AF-35BA0F2897FE">
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-24 19:48:13 UTC</createdTime>

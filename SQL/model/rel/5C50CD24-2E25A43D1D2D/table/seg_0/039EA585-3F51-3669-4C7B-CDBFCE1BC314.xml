@@ -34,6 +34,16 @@
 <colAssociation fkAssociation="590BBA38-A022-0DD8-AA4F-C64B0A25439F" referredColumn="DB3A4961-E099-B06F-52F3-89DEFF976673"/>
 </associations>
 </Column>
+<Column name="created_at" id="A13F0230-1B69-BDD8-7AB8-AD27C3DB0803">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-08 14:37:09 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 <Column name="type" id="01BC19D6-6F07-5858-AF4F-CAA87ACA0303">
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-24 19:48:13 UTC</createdTime>
