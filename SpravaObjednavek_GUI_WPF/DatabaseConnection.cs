@@ -12,14 +12,14 @@ namespace SpravaObjednavek_GUI_WPF
         public static OracleConnection? GetConnection()
         {
             OracleConnection conn = new OracleConnection(connectionString);
-            try
-            {
-                conn.Open();
-            }
-            catch (OracleException)
-            {
-                return null;
-            }
+            //try
+            //{
+            //    conn.Open();
+            //}
+            //catch (OracleException)
+            //{
+            //    return null;
+            //}
             return conn;
         }
     }

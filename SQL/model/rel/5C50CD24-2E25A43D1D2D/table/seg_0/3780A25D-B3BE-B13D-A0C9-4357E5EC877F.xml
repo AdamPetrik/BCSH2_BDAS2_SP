@@ -36,23 +36,18 @@
 <createdTime>2025-11-24 19:48:13 UTC</createdTime>
 <generatorID>71B1CFF2-FC96-B618-731D-C573970562CF</generatorID>
 <ownerDesignName>model</ownerDesignName>
-<constraintName>item_price_range_constraint</constraintName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
-<listOfRanges>
-<rangeDef class="oracle.dbtools.crest.model.design.constraint.AVT">
-<beginValue>0</beginValue>
-</rangeDef>
-</listOfRanges>
 </Column>
 <Column name="image_id" id="488703D0-B5D9-BBD1-E05B-E5DA52E7BD7B">
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-12-05 15:57:06 UTC</createdTime>
 <generatorID>F9577224-AEE0-524E-4134-A56A5FAE1D77</generatorID>
 <ownerDesignName>model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
@@ -75,6 +70,17 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="BF85D5CB-A21C-0B20-6BDD-1E09A61D5F7F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6DBF1C82-9016-276F-F398-15AA79532BBA" name="ITEM__IDX">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-09 15:26:33 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>AE313B11-03FB-B23F-90A9-CC594EFFA61C</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="488703D0-B5D9-BBD1-E05B-E5DA52E7BD7B"/>
 </indexColumnUsage>
 </ind_PK_UK>
 <ind_PK_UK id="1E96618A-D4E0-3768-7DCA-D1B718C94398" name="ITEM_IMAGE_FK">

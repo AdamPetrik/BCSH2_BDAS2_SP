@@ -128,5 +128,13 @@
 <colUsage columnID="2F45BC9A-CFC8-4E83-B6F0-36EB4283FB6D"/>
 </indexColumnUsage>
 </ind_PK_UK>
+<ind_PK_UK id="E38B4AD3-C259-48F6-5684-8FE8A17C0991" name="IMAGE_ITEM_FK">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-09 15:26:33 UTC</createdTime>
+<generatorID>AE313B11-03FB-B23F-90A9-CC594EFFA61C</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+</ind_PK_UK>
 </indexes>
 </Table>

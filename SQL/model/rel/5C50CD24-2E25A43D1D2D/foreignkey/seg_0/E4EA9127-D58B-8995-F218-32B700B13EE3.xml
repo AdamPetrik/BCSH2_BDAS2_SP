@@ -9,7 +9,7 @@
 <referredTableID>866E7527-928B-6305-A353-7358B0D37114</referredTableID>
 <keyObject>4799C9B3-9D75-62DD-1D1E-0CFA9658BD82</keyObject>
 <referredKeyID>4799C9B3-9D75-62DD-1D1E-0CFA9658BD82</referredKeyID>
-<mandatory>true</mandatory>
+<mandatory>false</mandatory>
 <refColNames>image_id</refColNames>
 <transferable>true</transferable>
 <rely>false</rely>

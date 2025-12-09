@@ -3,8 +3,9 @@
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-02 18:35:47 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
 </engineerTo>
 <adequatelyNormalized>NO</adequatelyNormalized>
 <expectedVolumes>0</expectedVolumes>
@@ -19,8 +20,9 @@
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-02 18:35:52 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
@@ -31,8 +33,9 @@
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-02 18:36:17 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
@@ -44,8 +47,9 @@
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-02 18:36:02 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
 </engineerTo>
 <constraintName>item_price_range_constraint</constraintName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -66,6 +70,7 @@
 <engineerTo>
 <item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
 </engineerTo>
+<nullsAllowed>true</nullsAllowed>
 <referedAttribute>D4C11390-831A-9138-00F3-0A5DAF5C3125</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
@@ -78,8 +83,9 @@
 <createdBy>Adam Petřík</createdBy>
 <createdTime>2025-11-02 18:35:59 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <newElementsIDs>5ED339C3-8E33-16AC-FB41-F4A675A2958C</newElementsIDs>
