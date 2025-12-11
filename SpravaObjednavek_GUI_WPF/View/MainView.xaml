@@ -77,7 +77,13 @@
                  Command="{Binding UpdateViewCommand}"
                  CommandParameter="Kasa"
                  IsChecked="True"/>
-                
+
+                <RadioButton Content="Alergeny"
+                GroupName="Navigace"
+                Style="{StaticResource MenuButtonStyle}"
+                Command="{Binding UpdateViewCommand}"
+                CommandParameter="Alergeny"/>
+
                 <RadioButton Content="Objednávky"
                  GroupName="Navigace"
                  Style="{StaticResource MenuButtonStyle}"

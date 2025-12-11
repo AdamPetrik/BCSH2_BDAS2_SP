@@ -44,5 +44,38 @@ namespace SpravaObjednavek_GUI_WPF.Services
 
             return polozky;
         }
+
+        public List<PolozkaAlergen> NacistAlergeny()
+        {
+            var seznam = new List<PolozkaAlergen>();
+
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    // SQL dotaz na tvůj view
+                    string sql = "SELECT NAZEV_POLOZKY, NAZEV_ALERGENU FROM V_POLOZKY_ALERGENY ORDER BY NAZEV_POLOZKY";
+
+                    using (OracleCommand cmd = new OracleCommand(sql, conn))
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            seznam.Add(new PolozkaAlergen
+                            {
+                                NazevPolozky = reader["NAZEV_POLOZKY"].ToString(),
+                                NazevAlergenu = reader["NAZEV_ALERGENU"].ToString()
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Chyba načítání alergenů: " + ex.Message);
+                }
+            }
+            return seznam;
+        }
     }
 }

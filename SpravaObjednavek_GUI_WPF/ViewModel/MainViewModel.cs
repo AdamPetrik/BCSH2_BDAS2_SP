@@ -33,6 +33,10 @@ namespace SpravaObjednavek_GUI_WPF
                         CurrentView = new KasaViewModel();
                         break;
 
+                    case "Alergeny":
+                        CurrentView = new AlergenyViewModel();
+                        break;
+
                     case "Objednavky":
                         CurrentView = new ObjednavkyViewModel();
                         break;
