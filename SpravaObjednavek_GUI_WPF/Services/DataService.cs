@@ -3,6 +3,7 @@ using SpravaObjednavek_GUI_WPF.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -382,6 +383,76 @@ namespace SpravaObjednavek_GUI_WPF.Services
                     cmd.Parameters.Add("p_license_id", OracleDbType.Int32).Value = licenseId;
                     cmd.Parameters.Add("p_address_id", OracleDbType.Int32).Value = addressId;
                     cmd.Parameters.Add("p_note", OracleDbType.Varchar2).Value = poznamka;
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public int NahratObrazek(string cestaKSouboru, string autor)
+        {
+            // 1. Načtení souboru z disku do byte[]
+            byte[] dataObrazku = File.ReadAllBytes(cestaKSouboru);
+
+            // Získání informací o souboru
+            FileInfo fi = new FileInfo(cestaKSouboru);
+            string filename = fi.Name;
+            string extension = fi.Extension.Replace(".", ""); // např. "jpg"
+            string mimetype = "image/" + extension; // Zjednodušeně
+
+            int newImageId = 0;
+
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("UPLOAD_IMAGE", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("p_filename", OracleDbType.Varchar2).Value = filename;
+                    cmd.Parameters.Add("p_extension", OracleDbType.Varchar2).Value = extension;
+                    cmd.Parameters.Add("p_mimetype", OracleDbType.Varchar2).Value = mimetype;
+
+                    // Posílání BLOBu
+                    cmd.Parameters.Add("p_content", OracleDbType.Blob).Value = dataObrazku;
+
+                    cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = autor;
+
+                    // Výstupní parametr
+                    OracleParameter outId = new OracleParameter("p_new_id", OracleDbType.Int32);
+                    outId.Direction = System.Data.ParameterDirection.Output;
+                    cmd.Parameters.Add(outId);
+
+                    cmd.ExecuteNonQuery();
+
+                    // Získání ID
+                    newImageId = Convert.ToInt32(outId.Value.ToString());
+                }
+            }
+            return newImageId;
+        }
+
+        public void VytvoritPolozkuMenu(string nazev, decimal cena, int? imageId)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("CREATE_ITEM", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("p_name", OracleDbType.Varchar2).Value = nazev;
+                    cmd.Parameters.Add("p_price", OracleDbType.Int32).Value = cena; // Cena je v DB INTEGER
+
+                    // Ošetření NULL hodnoty pro obrázek
+                    if (imageId.HasValue)
+                    {
+                        cmd.Parameters.Add("p_image_id", OracleDbType.Int32).Value = imageId.Value;
+                    }
+                    else
+                    {
+                        cmd.Parameters.Add("p_image_id", OracleDbType.Int32).Value = DBNull.Value;
+                    }
 
                     cmd.ExecuteNonQuery();
                 }

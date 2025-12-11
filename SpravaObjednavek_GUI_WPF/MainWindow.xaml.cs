@@ -39,6 +39,8 @@ namespace SpravaObjednavek_GUI_WPF
                 if (userId != null)
                 {
                     App.PrihlasenyUzivatelId = userId.Value;
+                    var detail = _dataService.ZiskatDetailUzivatele(userId.Value);
+                    App.PrihlasenyJmeno = detail.Jmeno;
                     OtevritHlavniAplikaci();
                 }
                 else

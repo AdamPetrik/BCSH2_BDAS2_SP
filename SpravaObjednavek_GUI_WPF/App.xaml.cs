@@ -12,6 +12,7 @@ namespace SpravaObjednavek_GUI_WPF
     {
         // Zde si globálně uložíme ID uživatele, jakmile se přihlásí
         public static int? PrihlasenyUzivatelId { get; set; }
+        public static string PrihlasenyJmeno { get; set; }
 
         // Tato metoda se spustí automaticky, když se aplikace zavírá (křížkem, Alt+F4...)
         protected override void OnExit(ExitEventArgs e)

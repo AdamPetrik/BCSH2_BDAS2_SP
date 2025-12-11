@@ -20,9 +20,7 @@
             </TabItem>
 
             <TabItem Header="Správa Menu">
-                <Grid Background="White">
-                    <TextBlock Text="Zde bude editace ceníku" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Grid>
+                <view:SpravaMenuView DataContext="{Binding SpravaMenuVM}"/>
             </TabItem>
 
         </TabControl>
