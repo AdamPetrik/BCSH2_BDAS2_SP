@@ -3,10 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SpravaObjednavek_GUI_WPF.View"
+             xmlns:view="clr-namespace:SpravaObjednavek_GUI_WPF.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Aqua">
-        <TextBlock Text="Toto je Administrace" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" FontWeight="Bold"/>
+    <Grid Background="#F0F0F0">
+        <TabControl Margin="10" BorderThickness="0" Background="Transparent">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Padding" Value="10,5"/>
+                </Style>
+            </TabControl.Resources>
+
+            <TabItem Header="Registrace uživatelů">
+                <view:RegistraceView DataContext="{Binding RegistraceVM}"/>
+            </TabItem>
+
+            <TabItem Header="Správa Menu">
+                <Grid Background="White">
+                    <TextBlock Text="Zde bude editace ceníku" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
     </Grid>
 </UserControl>

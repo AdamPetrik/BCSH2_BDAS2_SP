@@ -362,6 +362,32 @@ namespace SpravaObjednavek_GUI_WPF.Services
             return seznam;
         }
 
+        public void RegistrovatUzivatele(string jmeno, string heslo, string role, int licenseId, int addressId, string poznamka)
+        {
+            string hashHesla = VytvoritMD5(heslo);
+
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("REGISTER_USER", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    // Parametry musí sedět s názvy v proceduře
+                    cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = jmeno;
+                    cmd.Parameters.Add("p_password_hash", OracleDbType.Varchar2).Value = hashHesla;
+                    cmd.Parameters.Add("p_role", OracleDbType.Varchar2).Value = role;
+
+                    // Nové parametry
+                    cmd.Parameters.Add("p_license_id", OracleDbType.Int32).Value = licenseId;
+                    cmd.Parameters.Add("p_address_id", OracleDbType.Int32).Value = addressId;
+                    cmd.Parameters.Add("p_note", OracleDbType.Varchar2).Value = poznamka;
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())
