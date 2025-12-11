@@ -17,8 +17,21 @@ namespace SpravaObjednavek_GUI_WPF
             }
         }
 
-        // NOVÉ: Místo tří příkazů máme jen jeden univerzální
         public ICommand UpdateViewCommand { get; set; }
+
+        private string _prihlasenyJmeno;
+        public string PrihlasenyJmeno
+        {
+            get => _prihlasenyJmeno;
+            set { _prihlasenyJmeno = value; OnPropertyChanged(); }
+        }
+
+        private string _prihlasenyRole;
+        public string PrihlasenyRole
+        {
+            get => _prihlasenyRole;
+            set { _prihlasenyRole = value; OnPropertyChanged(); }
+        }
 
         public MainViewModel()
         {
@@ -53,6 +66,29 @@ namespace SpravaObjednavek_GUI_WPF
 
             // Výchozí stránka po spuštění
             CurrentView = new KasaViewModel();
+
+            NacistUzivatele();
+        }
+
+        private void NacistUzivatele()
+        {
+            // Podíváme se do globální proměnné v App.xaml.cs
+            if (App.PrihlasenyUzivatelId != null)
+            {
+                var service = new Services.DataService();
+                var info = service.ZiskatDetailUzivatele(App.PrihlasenyUzivatelId.Value);
+
+                PrihlasenyJmeno = info.Jmeno;
+
+                // Můžeme roli trochu přeložit, pokud je v DB anglicky/zkratkou
+                PrihlasenyRole = info.Role;
+            }
+            else
+            {
+                // Pokud je ID null, je to host
+                PrihlasenyJmeno = "Host";
+                PrihlasenyRole = "Neregistrovaný";
+            }
         }
     }
 }

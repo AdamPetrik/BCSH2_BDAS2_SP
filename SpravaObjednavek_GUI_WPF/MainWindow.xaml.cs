@@ -1,61 +1,73 @@
-﻿using Oracle.ManagedDataAccess.Client;
-using System.IO;
-using System.Text;
+﻿using SpravaObjednavek_GUI_WPF.Services;
+using SpravaObjednavek_GUI_WPF.View; // <--- DŮLEŽITÉ: Abychom viděli MainView
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SpravaObjednavek_GUI_WPF
 {
     public partial class MainWindow : Window
     {
-        private OracleConnection? conn;
-        private bool dbError = false;
+        private DataService _dataService;
 
         public MainWindow()
         {
             InitializeComponent();
-            //conn = DatabaseConnection.GetConnection();
-            //if (conn == null)
-            //{
-            //    MessageBox.Show("Navázání spojení s databází se nezdařilo.\nZkontrolujte internetové připojení a spusťte aplikaci znovu.", "Chyba přihlášení");
-            //    dbError = true;
-            //}
+            _dataService = new DataService();
+        }
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            usernameTb.Focus(); // Kurzor skočí do pole jméno
         }
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (usernameTb.Text == "" || passwordTb.Text == "")
+            string jmeno = usernameTb.Text;
+            string heslo = passwordTb.Password; // PasswordBox používá .Password
+
+            if (string.IsNullOrWhiteSpace(jmeno) || string.IsNullOrWhiteSpace(heslo))
             {
-                MessageBox.Show("Přihlášení se nezdařilo. Zkontrolujte uživatelské jméno a heslo.", "Chyba přihlášení");
+                MessageBox.Show("Zadejte prosím jméno a heslo.", "Upozornění", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
             }
-            else
+
+            try
             {
-                //Přihlášení uživatele
-                //AppWindow appWindow = new AppWindow();
-                //appWindow.Show();
+                // Voláme službu
+                int? userId = _dataService.OveritUzivatele(jmeno, heslo);
+
+                if (userId != null)
+                {
+                    App.PrihlasenyUzivatelId = userId.Value;
+                    OtevritHlavniAplikaci();
+                }
+                else
+                {
+                    MessageBox.Show("Chybné jméno nebo heslo.", "Chyba přihlášení", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Chyba připojení k databázi:\n" + ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void guestBtn_Click(object sender, RoutedEventArgs e)
         {
-            MainView app = new MainView();
-            app.Show();
-            Close();
+            // Host se neověřuje v DB
+            OtevritHlavniAplikaci();
         }
 
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        private void OtevritHlavniAplikaci()
         {
-            if (dbError)
-            {
-                this.Close();
-            }
+            // Vytvoříme instanci hlavního okna (MainView je ve složce View)
+            MainView hlavniOkno = new MainView();
+
+            // Zobrazíme ho
+            hlavniOkno.Show();
+
+            // Zavřeme toto přihlašovací okno
+            this.Close();
         }
     }
 }

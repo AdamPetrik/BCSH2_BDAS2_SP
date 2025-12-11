@@ -68,38 +68,58 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Background="#2D2D30">
 
-        <DockPanel LastChildFill="True" Grid.ColumnSpan="2">
-            <StackPanel DockPanel.Dock="Left" Width="200" Background="#fafafa">
-                <RadioButton Content="Kasa"
-                 GroupName="Navigace"
-                 Style="{StaticResource MenuButtonStyle}"
-                 Command="{Binding UpdateViewCommand}"
-                 CommandParameter="Kasa"
-                 IsChecked="True"/>
+            <DockPanel>
 
-                <RadioButton Content="Alergeny"
-                GroupName="Navigace"
-                Style="{StaticResource MenuButtonStyle}"
-                Command="{Binding UpdateViewCommand}"
-                CommandParameter="Alergeny"/>
+                <StackPanel DockPanel.Dock="Bottom" Margin="20,0,20,20">
+                    <Separator Background="#555" Margin="0,0,0,15"/>
 
-                <RadioButton Content="Objednávky"
-                 GroupName="Navigace"
-                 Style="{StaticResource MenuButtonStyle}"
-                 Command="{Binding UpdateViewCommand}"
-                 CommandParameter="Objednavky"/>
+                    <TextBlock Text="Přihlášený uživatel:" 
+                       Foreground="Gray" FontSize="12"/>
 
-                <RadioButton Content="Administrace"
-                 GroupName="Navigace"
-                 Style="{StaticResource MenuButtonStyle}"
-                 Command="{Binding UpdateViewCommand}"
-                 CommandParameter="Administrace"/>
+                    <TextBlock Text="{Binding PrihlasenyJmeno}" 
+                       Foreground="White" FontWeight="Bold" FontSize="16" Margin="0,2,0,5"/>
 
-            </StackPanel>
+                    <Border Background="#444" CornerRadius="4" Padding="8,2" HorizontalAlignment="Left">
+                        <TextBlock Text="{Binding PrihlasenyRole}" 
+                           Foreground="#DDD" FontSize="12" FontWeight="SemiBold"/>
+                    </Border>
+                </StackPanel>
 
-            <ContentControl Content="{Binding CurrentView}" />
+                <StackPanel Margin="0,20,0,0">
+                    <TextBlock Text="MENU" Foreground="Gray" Margin="15,0,0,10" FontWeight="Bold"/>
 
-        </DockPanel>
+                    <RadioButton Content="Kasa"
+                         GroupName="Navigace"
+                         Style="{StaticResource MenuButtonStyle}"
+                         Command="{Binding UpdateViewCommand}"
+                         CommandParameter="Kasa"
+                         IsChecked="True"/>
+
+                    <RadioButton Content="Alergeny"
+                         GroupName="Navigace"
+                         Style="{StaticResource MenuButtonStyle}"
+                         Command="{Binding UpdateViewCommand}"
+                         CommandParameter="Alergeny"/>
+
+                    <RadioButton Content="Objednávky"
+                         GroupName="Navigace"
+                         Style="{StaticResource MenuButtonStyle}"
+                         Command="{Binding UpdateViewCommand}"
+                         CommandParameter="Objednavky"/>
+
+                    <RadioButton Content="Administrace"
+                         GroupName="Navigace"
+                         Style="{StaticResource MenuButtonStyle}"
+                         Command="{Binding UpdateViewCommand}"
+                         CommandParameter="Administrace"/>
+                </StackPanel>
+
+            </DockPanel>
+        </Border>
+
+        <ContentControl Grid.Column="1" Content="{Binding CurrentView}" />
+
     </Grid>
 </Window>

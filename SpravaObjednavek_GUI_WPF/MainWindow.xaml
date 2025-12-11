@@ -11,7 +11,7 @@
         <Label x:Name="usernameLabel" Content="Přihlašovací jméno" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="usernameTb" HorizontalAlignment="Center" Margin="10,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
         <Label x:Name="passwordLabel" Content="Heslo" HorizontalAlignment="Center" Margin="10,95,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="passwordTb" HorizontalAlignment="Center" Margin="10,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
+        <PasswordBox x:Name="passwordTb" HorizontalAlignment="Center" Margin="10,136,0,0" VerticalAlignment="Top" Width="200"/>
         <Button x:Name="okBtn" Content="Přihlásit se" HorizontalAlignment="Center" Margin="0,206,0,0" VerticalAlignment="Top" Padding="5" Click="loginBtn_Click"/>
         <Button x:Name="guestBtn" Content="Pokračovat jako host" HorizontalAlignment="Center" Margin="0,264,0,0" VerticalAlignment="Top" Padding="5" Click="guestBtn_Click"/>
 
