@@ -143,10 +143,15 @@
                         </Grid.ColumnDefinitions>
 
                         <Button Grid.Column="0" Content="HOTOVĚ" 
-                                Style="{StaticResource PaymentButtonStyle}" Background="#4CAF50"/>
-
+        Style="{StaticResource PaymentButtonStyle}" 
+        Background="#4CAF50"
+        Command="{Binding ZaplatitCommand}" 
+        CommandParameter="CASH"/>
                         <Button Grid.Column="1" Content="KARTOU" 
-                                Style="{StaticResource PaymentButtonStyle}" Background="#2196F3"/>
+        Style="{StaticResource PaymentButtonStyle}" 
+        Background="#2196F3"
+        Command="{Binding ZaplatitCommand}"
+        CommandParameter="CARD"/>
                     </Grid>
                 </StackPanel>
             </Grid>

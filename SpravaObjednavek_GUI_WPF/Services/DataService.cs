@@ -2,6 +2,7 @@
 using SpravaObjednavek_GUI_WPF.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -201,6 +202,164 @@ namespace SpravaObjednavek_GUI_WPF.Services
                 }
             }
             return detail;
+        }
+
+        // Nezapomeňte nahoře v souboru mít: using System.Linq; 
+
+        public void VytvoritObjednavku(int userId, decimal celkovaCena, string typPlatby, IEnumerable<PolozkaKosiku> polozky)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+
+                using (OracleTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. VLOŽENÍ HLAVIČKY - OPRAVA PARAMETRŮ
+                        // Přejmenoval jsem :uid na :p_userId, :price na :p_price atd., aby nedocházelo ke kolizi s klíčovými slovy Oracle.
+                        string sqlOrder = @"
+                    INSERT INTO ""ORDER"" (order_id, user_id, created_at, type, price, method) 
+                    VALUES (ORDER_ID_SEQ.NEXTVAL, :p_userId, SYSDATE, 'REGULAR', :p_price, :p_method)
+                    RETURNING order_id INTO :p_newId";
+
+                        int newOrderId;
+
+                        using (OracleCommand cmd = new OracleCommand(sqlOrder, conn))
+                        {
+                            cmd.Transaction = transaction;
+
+                            // !!! DŮLEŽITÉ: Zapneme vázání podle jména, jinak se Oracle ztratí v pořadí parametrů !!!
+                            cmd.BindByName = true;
+
+                            // Používáme nové, bezpečné názvy parametrů
+                            cmd.Parameters.Add(new OracleParameter("p_userId", userId));
+                            cmd.Parameters.Add(new OracleParameter("p_price", celkovaCena));
+                            cmd.Parameters.Add(new OracleParameter("p_method", typPlatby));
+
+                            // Výstupní parametr
+                            OracleParameter outId = new OracleParameter("p_newId", OracleDbType.Int32);
+                            outId.Direction = System.Data.ParameterDirection.Output;
+                            cmd.Parameters.Add(outId);
+
+                            cmd.ExecuteNonQuery();
+
+                            // Získání ID
+                            string hodnotaId = outId.Value.ToString();
+                            newOrderId = int.Parse(hodnotaId);
+                        }
+
+                        // 2. VLOŽENÍ POLOŽEK
+                        string sqlItem = "INSERT INTO ORDER_ITEM (order_id, item_id, quantity) VALUES (:p_oid, :p_iid, :p_qty)";
+
+                        using (OracleCommand cmdItem = new OracleCommand(sqlItem, conn))
+                        {
+                            cmdItem.Transaction = transaction;
+                            cmdItem.BindByName = true; // I tady pro jistotu
+
+                            foreach (var polozka in polozky)
+                            {
+                                cmdItem.Parameters.Clear();
+                                cmdItem.Parameters.Add(new OracleParameter("p_oid", newOrderId));
+                                cmdItem.Parameters.Add(new OracleParameter("p_iid", polozka.Id));
+                                cmdItem.Parameters.Add(new OracleParameter("p_qty", polozka.Pocet));
+
+                                cmdItem.ExecuteNonQuery();
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public List<ObjednavkaZaznam> NacistObjednavkyPodleData(int mesic, int rok)
+        {
+            var seznam = new List<ObjednavkaZaznam>();
+
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+
+                    using (OracleCommand cmd = new OracleCommand("GET_ORDERS_BY_MONTH", conn))
+                    {
+                        // Řekneme, že voláme proceduru, ne SQL text
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        // Přidáme parametry
+                        cmd.Parameters.Add("p_month", OracleDbType.Int32).Value = mesic;
+                        cmd.Parameters.Add("p_year", OracleDbType.Int32).Value = rok;
+
+                        // Výstupní parametr (Kurzor)
+                        cmd.Parameters.Add("p_results", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                seznam.Add(new ObjednavkaZaznam
+                                {
+                                    Id = Convert.ToInt32(reader["ORDER_ID"]),
+                                    Datum = Convert.ToDateTime(reader["CREATED_AT"]),
+                                    Cena = Convert.ToDecimal(reader["PRICE"]),
+                                    ZpusobPlatby = reader["METHOD"].ToString(),
+                                    Obsluha = reader["USER_NAME"].ToString()
+                                });
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Chyba načítání objednávek: " + ex.Message);
+                }
+            }
+            return seznam;
+        }
+
+        public List<StatistikaItem> ZiskatStatistiku(int minId, int maxId)
+        {
+            var seznam = new List<StatistikaItem>();
+
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    using (OracleCommand cmd = new OracleCommand("GET_STATS_BY_RANGE", conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add("p_min_id", OracleDbType.Int32).Value = minId;
+                        cmd.Parameters.Add("p_max_id", OracleDbType.Int32).Value = maxId;
+                        cmd.Parameters.Add("p_results", OracleDbType.RefCursor).Direction = System.Data.ParameterDirection.Output;
+
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                seznam.Add(new StatistikaItem
+                                {
+                                    Nazev = reader["NAME"].ToString(),
+                                    Pocet = Convert.ToInt32(reader["POCET"])
+                                });
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Chyba statistiky: " + ex.Message);
+                }
+            }
+            return seznam;
         }
 
         private string VytvoritMD5(string vstup)

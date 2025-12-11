@@ -54,8 +54,16 @@
             <view:KasaView />
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type vm:AlergenyViewModel}">
+            <view:AlergenyView />
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type vm:ObjednavkyViewModel}">
             <view:ObjednavkyView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:StatistikyViewModel}">
+            <view:StatistikyView />
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type vm:AdministraceViewModel}">
@@ -103,11 +111,17 @@
                          Command="{Binding UpdateViewCommand}"
                          CommandParameter="Alergeny"/>
 
-                    <RadioButton Content="Objednávky"
+                    <RadioButton Content="Historie objednávek"
                          GroupName="Navigace"
                          Style="{StaticResource MenuButtonStyle}"
                          Command="{Binding UpdateViewCommand}"
                          CommandParameter="Objednavky"/>
+
+                    <RadioButton Content="Statistiky"
+                        GroupName="Navigace"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Command="{Binding UpdateViewCommand}"
+                        CommandParameter="Statistiky"/>
 
                     <RadioButton Content="Administrace"
                          GroupName="Navigace"

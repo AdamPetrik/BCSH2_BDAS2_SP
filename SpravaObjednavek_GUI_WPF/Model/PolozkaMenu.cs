@@ -11,6 +11,7 @@
     // Pomocná třída pro položku v pravém seznamu (košíku)
     public class PolozkaKosiku : ObservableObject
     {
+        public int Id { get; set; }
         public string Nazev { get; set; }
         public decimal CenaZaKus { get; set; }
 
