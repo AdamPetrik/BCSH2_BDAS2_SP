@@ -123,6 +123,22 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="Cena" Width="90" DisplayMemberBinding="{Binding CenaCelkem, StringFormat={}{0:N0} Kč}"/>
+                            <GridViewColumn Width="40">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="✕" 
+                            Foreground="Red" 
+                            FontWeight="Bold"
+                            Background="Transparent" 
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            ToolTip="Odebrat z košíku"
+                            
+                            Command="{Binding DataContext.OdebratZKosikuCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            CommandParameter="{Binding}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>

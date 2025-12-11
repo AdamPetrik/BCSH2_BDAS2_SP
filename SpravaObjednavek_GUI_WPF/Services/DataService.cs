@@ -459,6 +459,50 @@ namespace SpravaObjednavek_GUI_WPF.Services
             }
         }
 
+        public void SmazatObjednavku(int orderId)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("DELETE_ORDER", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_order_id", OracleDbType.Int32).Value = orderId;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void UpravitPolozku(int id, string nazev, decimal cena)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("UPDATE_ITEM", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_id", OracleDbType.Int32).Value = id;
+                    cmd.Parameters.Add("p_name", OracleDbType.Varchar2).Value = nazev;
+                    cmd.Parameters.Add("p_price", OracleDbType.Int32).Value = cena;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void SmazatPolozku(int id)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("DELETE_ITEM", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_id", OracleDbType.Int32).Value = id;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())

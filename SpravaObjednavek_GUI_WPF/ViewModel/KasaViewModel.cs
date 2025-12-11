@@ -16,6 +16,7 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
 
         // Seznam účtenky (Košík)
         public ObservableCollection<PolozkaKosiku> KosikPolozky { get; set; }
+        public ICommand OdebratZKosikuCommand { get; set; }
         public ICommand ZaplatitCommand { get; set; }
 
         // Celková cena (musíme ji aktualizovat při každé změně)
@@ -40,6 +41,7 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
 
             // Inicializace příkazu
             PridatDoKosikuCommand = new RelayCommand(PridatPolozku);
+            OdebratZKosikuCommand = new RelayCommand(OdebratPolozku);
             ZaplatitCommand = new RelayCommand(Zaplatit);
         }
 
@@ -75,6 +77,18 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
                         Pocet = 1
                     });
                 }
+                PrepocitatCelkem();
+            }
+        }
+
+        private void OdebratPolozku(object parameter)
+        {
+            if (parameter is PolozkaKosiku polozka)
+            {
+                // Odstraníme položku z kolekce
+                KosikPolozky.Remove(polozka);
+
+                // A musíme znovu přepočítat celkovou cenu
                 PrepocitatCelkem();
             }
         }

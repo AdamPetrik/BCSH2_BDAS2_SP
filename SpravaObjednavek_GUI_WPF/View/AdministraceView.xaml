@@ -22,7 +22,12 @@
             <TabItem Header="Správa Menu">
                 <view:SpravaMenuView DataContext="{Binding SpravaMenuVM}"/>
             </TabItem>
-
+            <TabItem Header="Správa Objednávek">
+                <view:SpravaObjednavekView DataContext="{Binding SpravaObjednavekVM}"/>
+            </TabItem>
+            <TabItem Header="Ceník">
+                <view:CenikView DataContext="{Binding CenikVM}"/>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

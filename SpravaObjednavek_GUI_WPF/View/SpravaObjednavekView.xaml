@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="SpravaObjednavek_GUI_WPF.View.SpravaObjednavekView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SpravaObjednavek_GUI_WPF.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="#F0F0F0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="White" Margin="20,20,20,10" Padding="15" CornerRadius="5" BorderBrush="#DDD" BorderThickness="1">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Správa objednávek" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,30,0"/>
+
+                <TextBlock Text="Měsíc:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <ComboBox ItemsSource="{Binding DostupneMesice}" SelectedItem="{Binding VybranyMesic}" Width="50" Margin="0,0,15,0"/>
+
+                <TextBlock Text="Rok:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <ComboBox ItemsSource="{Binding DostupneRoky}" SelectedItem="{Binding VybranyRok}" Width="80" Margin="0,0,20,0"/>
+
+                <Button Content="NAČÍST" Command="{Binding NacistCommand}" Background="#2196F3" Foreground="White" FontWeight="Bold" Padding="15,5">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="4"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <DataGrid Grid.Row="1" ItemsSource="{Binding SeznamObjednavek}" AutoGenerateColumns="False" 
+                  IsReadOnly="True" HeadersVisibility="Column" Background="White" Margin="20,0,20,20" BorderBrush="#DDD" BorderThickness="1">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
+                <DataGridTextColumn Header="Datum" Binding="{Binding Datum, StringFormat={}{0:dd.MM.yyyy HH:mm}}" Width="140"/>
+                <DataGridTextColumn Header="Obsluha" Binding="{Binding Obsluha}" Width="120"/>
+                <DataGridTextColumn Header="Cena" Binding="{Binding Cena, StringFormat={}{0:N0} Kč}" Width="80" FontWeight="Bold"/>
+
+                <DataGridTemplateColumn Width="80">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="SMAZAT" 
+                                    Background="#E53935" Foreground="White" FontSize="10" FontWeight="Bold" Padding="5,2" BorderThickness="0"
+                                    Command="{Binding DataContext.SmazatObjednavkuCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="3"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

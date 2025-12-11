@@ -9,6 +9,8 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
         // Vlastnost, na kterou se váže View
         public RegistraceViewModel RegistraceVM { get; set; }
         public SpravaMenuViewModel SpravaMenuVM { get; set; }
+        public SpravaObjednavekViewModel SpravaObjednavekVM { get; set; }
+        public CenikViewModel CenikVM { get; set; }
 
         public AdministraceViewModel()
         {
@@ -16,6 +18,8 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
             // Pokud tu chybí, ComboBox bude prázdný
             RegistraceVM = new RegistraceViewModel();
             SpravaMenuVM = new SpravaMenuViewModel();
+            SpravaObjednavekVM = new SpravaObjednavekViewModel();
+            CenikVM = new CenikViewModel();
         }
     }
 }
