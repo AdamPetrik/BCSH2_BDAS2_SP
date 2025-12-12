@@ -1103,6 +1103,21 @@ namespace SpravaObjednavek_GUI_WPF.Services
             return list;
         }
 
+        public string ZiskatRoliUzivatele(int userId)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "SELECT USER_TYPE FROM \"USER\" WHERE USER_ID = :id";
+                using (OracleCommand cmd = new OracleCommand(sql, conn))
+                {
+                    cmd.Parameters.Add("id", OracleDbType.Int32).Value = userId;
+                    object result = cmd.ExecuteScalar();
+                    return result != null ? result.ToString() : "USER";
+                }
+            }
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())

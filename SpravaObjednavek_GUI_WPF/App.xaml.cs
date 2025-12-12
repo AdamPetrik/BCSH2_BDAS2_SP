@@ -25,6 +25,7 @@ namespace SpravaObjednavek_GUI_WPF
         public static int? PrihlasenyUzivatelId { get; set; }
         public static string PrihlasenyJmeno { get; set; }
 
+        public static string PrihlasenaRole { get; set; } // "ADMINISTRATOR" nebo "USER"
         public static bool JeHost { get; set; } = false;
 
         // Tato metoda se spustí automaticky, když se aplikace zavírá (křížkem, Alt+F4...)

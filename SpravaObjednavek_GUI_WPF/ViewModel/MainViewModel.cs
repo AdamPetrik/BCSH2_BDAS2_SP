@@ -6,6 +6,11 @@ namespace SpravaObjednavek_GUI_WPF
     public class MainViewModel : ObservableObject
     {
         public bool JePlnyPristup { get; set; }
+        // 1. Pro Kasu a Objednávky (Musí být aspoň USER, ne HOST)
+        public bool JeRegistrovany { get; set; }
+
+        // 2. Pro Statistiky a Administraci (Musí být ADMINISTRATOR)
+        public bool JeAdmin { get; set; }
 
         // Tato vlastnost drží aktuálně zobrazený ViewModel (stránku)
         private object _currentView;
@@ -74,19 +79,20 @@ namespace SpravaObjednavek_GUI_WPF
                 }
             });
 
-            // Výchozí stránka po spuštění
-            // Nastavíme hodnotu podle toho, co jsme uložili v App
-            JePlnyPristup = !App.JeHost;
+            // Nastavení oprávnění
+            JeRegistrovany = !App.JeHost;
+
+            // Admin je ten, kdo není host A ZÁROVEŇ má roli ADMINISTRATOR
+            JeAdmin = !App.JeHost && App.PrihlasenaRole == "ADMINISTRATOR";
 
             // Výchozí pohled
-            if (App.JeHost)
+            if (JeAdmin || JeRegistrovany)
             {
-                // Host vidí jako první Alergeny (protože Kasu má zakázanou)
-                CurrentView = new AlergenyViewModel();
+                CurrentView = new KasaViewModel();
             }
             else
             {
-                CurrentView = new KasaViewModel();
+                CurrentView = new AlergenyViewModel(); // Host začíná zde
             }
 
             NacistUzivatele();

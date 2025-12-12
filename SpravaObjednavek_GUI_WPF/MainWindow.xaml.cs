@@ -2,6 +2,7 @@
 using SpravaObjednavek_GUI_WPF.View; // <--- DŮLEŽITÉ: Abychom viděli MainView
 using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace SpravaObjednavek_GUI_WPF
 {
@@ -38,14 +39,15 @@ namespace SpravaObjednavek_GUI_WPF
 
                 if (userId != null)
                 {
-                    App.PrihlasenyUzivatelId = userId.Value;
-                    var detail = _dataService.ZiskatDetailUzivatele(userId.Value);
-                    App.PrihlasenyJmeno = detail.Jmeno;
+                    App.PrihlasenyUzivatelId = userId;
+                    App.PrihlasenyJmeno = jmeno; // nebo načtené z DB
+                    App.JeHost = false;
+
+                    // === NOVÉ: Načtení role ===
+                    App.PrihlasenaRole = _dataService.ZiskatRoliUzivatele(userId.Value);
+
+                    // ... otevření hlavního okna ...
                     OtevritHlavniAplikaci();
-                }
-                else
-                {
-                    MessageBox.Show("Chybné jméno nebo heslo.", "Chyba přihlášení", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)

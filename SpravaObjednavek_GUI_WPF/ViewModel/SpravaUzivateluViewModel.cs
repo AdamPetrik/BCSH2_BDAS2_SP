@@ -48,6 +48,8 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
                         App.PrihlasenyJmeno = uzivatel.Jmeno;
                         App.JeHost = false;
 
+                        App.PrihlasenaRole = uzivatel.Role;
+
                         // 3. NAJDI AKTIVNÍ OKNO (Bezpečnější metoda)
                         // Místo Application.Current.MainWindow projdeme všechna otevřená okna
                         Window ciloveOkno = null;
