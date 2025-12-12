@@ -74,7 +74,6 @@ namespace SpravaObjednavek_GUI_WPF
                         break;
 
                     default:
-                        // Volitelně: co dělat, když přijde neznámý parametr (např. nic)
                         break;
                 }
             });

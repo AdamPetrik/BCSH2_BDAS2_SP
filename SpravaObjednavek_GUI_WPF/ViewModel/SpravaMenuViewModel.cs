@@ -1,9 +1,8 @@
-﻿using Microsoft.Win32; // Pro OpenFileDialog
+﻿using Microsoft.Win32;
 using SpravaObjednavek_GUI_WPF.Services;
-using System;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Imaging; // Pro obrázky
+using System.Windows.Media.Imaging;
 
 namespace SpravaObjednavek_GUI_WPF.ViewModel
 {

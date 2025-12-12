@@ -37,7 +37,6 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
                     EditMesto = _vybranaAdresa.Mesto;
                     EditPSC = _vybranaAdresa.PSC.ToString();
                 }
-                // Notify property changed pro všechny properties (aby se aktualizoval formulář)
                 OnPropertyChanged(nameof(EditUlice));
                 OnPropertyChanged(nameof(EditCisloPopisne));
                 OnPropertyChanged(nameof(EditKraj));

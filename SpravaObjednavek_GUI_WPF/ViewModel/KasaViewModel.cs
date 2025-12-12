@@ -1,7 +1,6 @@
 ﻿using SpravaObjednavek_GUI_WPF.Model;
 using SpravaObjednavek_GUI_WPF.Services;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 

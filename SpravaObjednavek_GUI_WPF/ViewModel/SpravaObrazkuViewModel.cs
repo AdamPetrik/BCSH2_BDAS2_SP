@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32; // Pro OpenFileDialog
+﻿using Microsoft.Win32;
 using SpravaObjednavek_GUI_WPF.Model;
 using SpravaObjednavek_GUI_WPF.Services;
 using System.Collections.ObjectModel;
@@ -128,7 +128,6 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
                 NacistData();
                 MessageBox.Show("Název upraven.");
                 // Znovu vybereme, aby nezmizel náhled (zjednodušeně)
-                // V praxi bychom jen aktualizovali objekt v kolekci
             }
             catch (System.Exception ex)
             {

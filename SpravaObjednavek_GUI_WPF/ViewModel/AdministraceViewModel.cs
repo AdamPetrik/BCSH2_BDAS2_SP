@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SpravaObjednavek_GUI_WPF.ViewModel
+﻿namespace SpravaObjednavek_GUI_WPF.ViewModel
 {
     public class AdministraceViewModel : ObservableObject
     {
-        // Vlastnost, na kterou se váže View
         public RegistraceViewModel RegistraceVM { get; set; }
         public SpravaMenuViewModel SpravaMenuVM { get; set; }
         public SpravaObjednavekViewModel SpravaObjednavekVM { get; set; }

@@ -50,8 +50,7 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
 
                         App.PrihlasenaRole = uzivatel.Role;
 
-                        // 3. NAJDI AKTIVNÍ OKNO (Bezpečnější metoda)
-                        // Místo Application.Current.MainWindow projdeme všechna otevřená okna
+                        // 3. NAJDI AKTIVNÍ OKNO
                         Window ciloveOkno = null;
 
                         foreach (Window w in Application.Current.Windows)
@@ -83,7 +82,7 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
                         // Zde se znovu načtou oprávnění pro nového uživatele
                         var newMainVM = new MainViewModel();
 
-                        // 5. Výměna mozku
+                        // 5. Výměna contextu
                         ciloveOkno.DataContext = newMainVM;
 
                         MessageBox.Show($"Nyní jste přihlášen jako: {uzivatel.Jmeno}", "Úspěch");

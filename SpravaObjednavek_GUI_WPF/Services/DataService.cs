@@ -1,12 +1,9 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using SpravaObjednavek_GUI_WPF.Model;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Windows.Media.Imaging;
 
 namespace SpravaObjednavek_GUI_WPF.Services
 {
@@ -21,7 +18,7 @@ namespace SpravaObjednavek_GUI_WPF.Services
             {
                 conn.Open();
 
-                // ZMĚNA SQL: Přidali jsme volání funkce FN_GET_ITEM_LABEL
+                // ZMĚNA SQL: přidání volání funkce FN_GET_ITEM_LABEL
                 string sql = @"
             SELECT 
                 ITEM_ID, 
@@ -62,7 +59,7 @@ namespace SpravaObjednavek_GUI_WPF.Services
                 try
                 {
                     conn.Open();
-                    // SQL dotaz na tvůj view
+                    // SQL dotaz na view
                     string sql = "SELECT NAZEV_POLOZKY, NAZEV_ALERGENU FROM V_POLOZKY_ALERGENY ORDER BY NAZEV_POLOZKY";
 
                     using (OracleCommand cmd = new OracleCommand(sql, conn))
@@ -119,7 +116,6 @@ namespace SpravaObjednavek_GUI_WPF.Services
                 }
                 catch (Exception ex)
                 {
-                    // Ideálně logovat chybu
                     System.Diagnostics.Debug.WriteLine("Chyba DB: " + ex.Message);
                     throw; // Pošleme chybu dál, ať ji vidíme v okně
                 }
@@ -129,7 +125,6 @@ namespace SpravaObjednavek_GUI_WPF.Services
 
         private void NastavitPrihlaseni(int userId, int stav, OracleConnection conn)
         {
-            // Pozor: "USER" je klíčové slovo, musí být v uvozovkách
             string updateSql = "UPDATE \"USER\" SET LOGGED_IN = :stav WHERE USER_ID = :id";
 
             using (OracleCommand cmd = new OracleCommand(updateSql, conn))
@@ -150,7 +145,6 @@ namespace SpravaObjednavek_GUI_WPF.Services
                     conn.Open();
 
                     // SQL příkaz: Nastaví LOGGED_IN na 0 pro dané ID
-                    // Pozor na uvozovky u "USER", protože je to klíčové slovo
                     string sql = "UPDATE \"USER\" SET LOGGED_IN = 0 WHERE USER_ID = :id";
 
                     using (OracleCommand cmd = new OracleCommand(sql, conn))
@@ -178,7 +172,6 @@ namespace SpravaObjednavek_GUI_WPF.Services
                 {
                     conn.Open();
                     // Spojíme tabulky, abychom získali Jméno i Typ
-                    // Předpokládám názvy tabulek "USER" a LOGIN_CREDS a sloupce USER_TYPE, USER_NAME
                     string sql = @"
                 SELECT c.USER_NAME, u.USER_TYPE 
                 FROM ""USER"" u 
@@ -209,7 +202,6 @@ namespace SpravaObjednavek_GUI_WPF.Services
             return detail;
         }
 
-        // Nezapomeňte nahoře v souboru mít: using System.Linq; 
 
         public void VytvoritObjednavku(int userId, decimal celkovaCena, string typPlatby, IEnumerable<PolozkaKosiku> polozky)
         {
@@ -222,7 +214,6 @@ namespace SpravaObjednavek_GUI_WPF.Services
                     try
                     {
                         // 1. VLOŽENÍ HLAVIČKY - OPRAVA PARAMETRŮ
-                        // Přejmenoval jsem :uid na :p_userId, :price na :p_price atd., aby nedocházelo ke kolizi s klíčovými slovy Oracle.
                         string sqlOrder = @"
                     INSERT INTO ""ORDER"" (order_id, user_id, created_at, type, price, method) 
                     VALUES (ORDER_ID_SEQ.NEXTVAL, :p_userId, SYSDATE, 'REGULAR', :p_price, :p_method)
@@ -234,10 +225,9 @@ namespace SpravaObjednavek_GUI_WPF.Services
                         {
                             cmd.Transaction = transaction;
 
-                            // !!! DŮLEŽITÉ: Zapneme vázání podle jména, jinak se Oracle ztratí v pořadí parametrů !!!
                             cmd.BindByName = true;
 
-                            // Používáme nové, bezpečné názvy parametrů
+                            // bezpečné názvy parametrů, zabránění kolize s systémovými slovy
                             cmd.Parameters.Add(new OracleParameter("p_userId", userId));
                             cmd.Parameters.Add(new OracleParameter("p_price", celkovaCena));
                             cmd.Parameters.Add(new OracleParameter("p_method", typPlatby));
@@ -513,7 +503,6 @@ namespace SpravaObjednavek_GUI_WPF.Services
             using (OracleConnection conn = DatabaseConnection.GetConnection())
             {
                 conn.Open();
-                // Jednoduchý select z View
                 using (OracleCommand cmd = new OracleCommand("SELECT * FROM V_DENNI_TRZBY", conn))
                 {
                     using (OracleDataReader reader = cmd.ExecuteReader())
@@ -567,7 +556,7 @@ namespace SpravaObjednavek_GUI_WPF.Services
                 try
                 {
                     conn.Open();
-                    // Stahujeme jen data, žádné vytváření BitmapImage zde!
+                    // Stahujeme jen data
                     string sql = @"
                 SELECT i.NAME, im.CONTENT, im.FILENAME, im.EXTENSION
                 FROM ITEM i
@@ -601,7 +590,6 @@ namespace SpravaObjednavek_GUI_WPF.Services
                 }
                 catch (Exception ex)
                 {
-                    // Logovat chybu, ale nevyhazovat, ať vidíme aspoň zbytek
                     System.Diagnostics.Debug.WriteLine("Chyba DB: " + ex.Message);
                 }
             }
@@ -674,7 +662,6 @@ namespace SpravaObjednavek_GUI_WPF.Services
                                 Id = Convert.ToInt32(reader["ITEM_ID"]),
                                 Nazev = reader["NAME"].ToString(),
                                 Cena = Convert.ToDecimal(reader["PRICE"])
-                                // Případně i ImageId atd.
                             });
                         }
                     }

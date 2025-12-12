@@ -6,6 +6,6 @@ namespace SpravaObjednavek_GUI_WPF.Model
     {
         public string Typ { get; set; }
         public string Jmeno { get; set; }
-        public DateTime? DatumVytvoreni { get; set; } // Použijeme nullable DateTime
+        public DateTime? DatumVytvoreni { get; set; }
     }
 }
