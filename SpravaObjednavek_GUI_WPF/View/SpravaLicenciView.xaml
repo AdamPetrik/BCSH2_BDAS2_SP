@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="SpravaObjednavek_GUI_WPF.View.SpravaLicenciView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SpravaObjednavek_GUI_WPF.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="#F0F0F0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+
+        <DataGrid Grid.Column="0" Margin="20" Background="White"
+                  ItemsSource="{Binding SeznamLicenci}"
+                  SelectedItem="{Binding VybranaLicence}"
+                  AutoGenerateColumns="False" IsReadOnly="True"
+                  BorderBrush="#DDD" BorderThickness="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Typ" Binding="{Binding NazevTypu}" Width="*" FontWeight="Bold"/>
+                <DataGridTextColumn Header="Platnost Od" Binding="{Binding PlatnostOd, StringFormat=d}" Width="100"/>
+                <DataGridTextColumn Header="Platnost Do" Binding="{Binding PlatnostDo, StringFormat=d}" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Border Grid.Column="1" Margin="0,20,20,20" Background="White" CornerRadius="5" BorderBrush="#DDD" BorderThickness="1">
+            <StackPanel Margin="10">
+                <TextBlock Text="Detail Licence" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,20"/>
+
+                <Button Content="➕ NOVÁ LICENCE" Command="{Binding NovaCommand}" 
+                        HorizontalAlignment="Right" Margin="0,-50,0,20" Padding="10,5"/>
+
+                <TextBlock Text="Typ Licence" Foreground="Gray"/>
+                <ComboBox ItemsSource="{Binding TypyLicenci}" 
+                          SelectedItem="{Binding VybranyTyp}"
+                          DisplayMemberPath="Nazev"
+                          Padding="5" Margin="0,0,0,20"/>
+
+                <TextBlock Text="Platnost Od" Foreground="Gray"/>
+                <DatePicker SelectedDate="{Binding EditOd}" Margin="0,0,0,20" Padding="5"/>
+
+                <TextBlock Text="Platnost Do" Foreground="Gray"/>
+                <DatePicker SelectedDate="{Binding EditDo}" Margin="0,0,0,20" Padding="5"/>
+
+                <Button Content="ULOŽIT" Command="{Binding UlozitCommand}" 
+                        Background="#4CAF50" Foreground="White" FontWeight="Bold" Padding="10" Margin="0,0,0,10"/>
+
+                <Button Content="SMAZAT" Command="{Binding SmazatCommand}" 
+                        Background="#E53935" Foreground="White" FontWeight="Bold" Padding="10"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

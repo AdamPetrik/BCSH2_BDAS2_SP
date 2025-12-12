@@ -28,6 +28,15 @@
             <TabItem Header="Ceník">
                 <view:CenikView DataContext="{Binding CenikVM}"/>
             </TabItem>
+            <TabItem Header="Správa Adres">
+                <view:SpravaAdresView DataContext="{Binding SpravaAdresVM}"/>
+            </TabItem>
+            <TabItem Header="Správa Licencí">
+                <view:SpravaLicenciView DataContext="{Binding SpravaLicenciVM}"/>
+            </TabItem>
+            <TabItem Header="Správa Alergenů">
+                <view:SpravaAlergenuView DataContext="{Binding SpravaAlergenuVM}"/>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

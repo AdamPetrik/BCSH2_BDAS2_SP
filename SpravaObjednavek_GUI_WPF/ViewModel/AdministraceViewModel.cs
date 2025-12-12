@@ -11,15 +11,19 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
         public SpravaMenuViewModel SpravaMenuVM { get; set; }
         public SpravaObjednavekViewModel SpravaObjednavekVM { get; set; }
         public CenikViewModel CenikVM { get; set; }
+        public SpravaAdresViewModel SpravaAdresVM { get; set; }
+        public SpravaLicenciViewModel SpravaLicenciVM { get; set; }
+        public SpravaAlergenuViewModel SpravaAlergenuVM { get; set; }
 
         public AdministraceViewModel()
         {
-            // !!! TENTO ŘÁDEK TAM MUSÍ BÝT !!!
-            // Pokud tu chybí, ComboBox bude prázdný
             RegistraceVM = new RegistraceViewModel();
             SpravaMenuVM = new SpravaMenuViewModel();
             SpravaObjednavekVM = new SpravaObjednavekViewModel();
             CenikVM = new CenikViewModel();
+            SpravaAdresVM = new SpravaAdresViewModel();
+            SpravaLicenciVM = new SpravaLicenciViewModel();
+            SpravaAlergenuVM = new SpravaAlergenuViewModel();
         }
     }
 }

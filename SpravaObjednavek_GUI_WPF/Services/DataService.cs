@@ -683,6 +683,241 @@ namespace SpravaObjednavek_GUI_WPF.Services
             return list;
         }
 
+        // 1. Načtení všech adres (SELECT)
+        public List<Adresa> NacistAdresy()
+        {
+            var list = new List<Adresa>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "SELECT * FROM ADDRESS ORDER BY CITY, STREET";
+                using (OracleCommand cmd = new OracleCommand(sql, conn))
+                {
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new Adresa
+                            {
+                                Id = Convert.ToInt32(reader["ADDRESS_ID"]),
+                                Ulice = reader["STREET"].ToString(),
+                                CisloPopisne = Convert.ToInt32(reader["BUILDING_NUMBER"]),
+                                Kraj = reader["PROVINCE"].ToString(),
+                                Mesto = reader["CITY"].ToString(),
+                                PSC = Convert.ToInt32(reader["POSTAL_CODE"])
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        // 2. Vytvoření
+        public void VytvoritAdresu(Adresa a)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("CREATE_ADDRESS", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_street", OracleDbType.Varchar2).Value = a.Ulice;
+                    cmd.Parameters.Add("p_building_number", OracleDbType.Int32).Value = a.CisloPopisne;
+                    cmd.Parameters.Add("p_province", OracleDbType.Varchar2).Value = a.Kraj;
+                    cmd.Parameters.Add("p_city", OracleDbType.Varchar2).Value = a.Mesto;
+                    cmd.Parameters.Add("p_postal_code", OracleDbType.Int32).Value = a.PSC;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // 3. Úprava
+        public void UpravitAdresu(Adresa a)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("UPDATE_ADDRESS", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_id", OracleDbType.Int32).Value = a.Id;
+                    cmd.Parameters.Add("p_street", OracleDbType.Varchar2).Value = a.Ulice;
+                    cmd.Parameters.Add("p_building_number", OracleDbType.Int32).Value = a.CisloPopisne;
+                    cmd.Parameters.Add("p_province", OracleDbType.Varchar2).Value = a.Kraj;
+                    cmd.Parameters.Add("p_city", OracleDbType.Varchar2).Value = a.Mesto;
+                    cmd.Parameters.Add("p_postal_code", OracleDbType.Int32).Value = a.PSC;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // 4. Smazání
+        public void SmazatAdresu(int id)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("DELETE_ADDRESS", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_id", OracleDbType.Int32).Value = id;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // 1. Načíst všechny licence
+        public List<Licence> NacistLicence()
+        {
+            var list = new List<Licence>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                // Řadíme od nejnovějších
+                string sql = "SELECT * FROM LICENSE ORDER BY VALID_FROM DESC";
+                using (OracleCommand cmd = new OracleCommand(sql, conn))
+                {
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new Licence
+                            {
+                                Id = Convert.ToInt32(reader["LICENSE_ID"]),
+                                TypId = Convert.ToInt32(reader["LICENSE_TYPE_ID"]),
+                                PlatnostOd = Convert.ToDateTime(reader["VALID_FROM"]),
+                                PlatnostDo = Convert.ToDateTime(reader["VALID_TILL"])
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        // 2. Vytvořit
+        public void VytvoritLicenci(int typId, DateTime od, DateTime doData)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("CREATE_LICENSE", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_type_id", OracleDbType.Int32).Value = typId;
+                    cmd.Parameters.Add("p_valid_from", OracleDbType.Date).Value = od;
+                    cmd.Parameters.Add("p_valid_till", OracleDbType.Date).Value = doData;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // 3. Upravit
+        public void UpravitLicenci(int id, int typId, DateTime od, DateTime doData)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("UPDATE_LICENSE", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_id", OracleDbType.Int32).Value = id;
+                    cmd.Parameters.Add("p_type_id", OracleDbType.Int32).Value = typId;
+                    cmd.Parameters.Add("p_valid_from", OracleDbType.Date).Value = od;
+                    cmd.Parameters.Add("p_valid_till", OracleDbType.Date).Value = doData;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // 4. Smazat
+        public void SmazatLicenci(int id)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("DELETE_LICENSE", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_id", OracleDbType.Int32).Value = id;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // 1. Načíst všechny alergeny
+        public List<Alergen> NacistVsechnyAlergeny()
+        {
+            var list = new List<Alergen>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "SELECT * FROM ALLERGEN ORDER BY ALLERGEN_ID";
+                using (OracleCommand cmd = new OracleCommand(sql, conn))
+                {
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new Alergen
+                            {
+                                Id = Convert.ToInt32(reader["ALLERGEN_ID"]),
+                                Nazev = reader["NAME"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        // 2. Vytvořit
+        public void VytvoritAlergen(string nazev)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("CREATE_ALLERGEN", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_name", OracleDbType.Varchar2).Value = nazev;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // 3. Upravit
+        public void UpravitAlergen(int id, string nazev)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("UPDATE_ALLERGEN", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_id", OracleDbType.Int32).Value = id;
+                    cmd.Parameters.Add("p_name", OracleDbType.Varchar2).Value = nazev;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // 4. Smazat
+        public void SmazatAlergen(int id)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("DELETE_ALLERGEN", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_id", OracleDbType.Int32).Value = id;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())

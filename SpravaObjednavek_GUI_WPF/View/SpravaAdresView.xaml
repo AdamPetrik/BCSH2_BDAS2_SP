@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="SpravaObjednavek_GUI_WPF.View.SpravaAdresView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SpravaObjednavek_GUI_WPF.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="#F0F0F0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+
+        <DataGrid Grid.Column="0" Margin="20" Background="White"
+                  ItemsSource="{Binding SeznamAdres}"
+                  SelectedItem="{Binding VybranaAdresa}"
+                  AutoGenerateColumns="False" IsReadOnly="True"
+                  BorderBrush="#DDD" BorderThickness="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Město" Binding="{Binding Mesto}" Width="*"/>
+                <DataGridTextColumn Header="Ulice" Binding="{Binding Ulice}" Width="*"/>
+                <DataGridTextColumn Header="Č.p." Binding="{Binding CisloPopisne}" Width="50"/>
+                <DataGridTextColumn Header="PSČ" Binding="{Binding PSC}" Width="60"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Border Grid.Column="1" Margin="0,20,20,20" Background="White" CornerRadius="5" BorderBrush="#DDD" BorderThickness="1">
+            <ScrollViewer>
+                <StackPanel Margin="10">
+                    <TextBlock Text="Detail Adresy" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,20"/>
+
+                    <Button Content="➕ NOVÁ ADRESA (Vyčistit)" Command="{Binding NovaAdresaCommand}" 
+                            HorizontalAlignment="Right" Margin="0,-50,0,20" Padding="10,5"/>
+
+                    <TextBlock Text="Město" Foreground="Gray"/>
+                    <TextBox Text="{Binding EditMesto}" Padding="5" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Ulice" Foreground="Gray"/>
+                    <TextBox Text="{Binding EditUlice}" Padding="5" Margin="0,0,0,10"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                            <TextBlock Text="Číslo popisné" Foreground="Gray"/>
+                            <TextBox Text="{Binding EditCisloPopisne}" Padding="5"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                            <TextBlock Text="PSČ" Foreground="Gray"/>
+                            <TextBox Text="{Binding EditPSC}" Padding="5"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <TextBlock Text="Kraj / Provincie" Foreground="Gray" Margin="0,10,0,0"/>
+                    <TextBox Text="{Binding EditKraj}" Padding="5" Margin="0,0,0,20"/>
+
+                    <Button Content="ULOŽIT" Command="{Binding UlozitCommand}" 
+                            Background="#4CAF50" Foreground="White" FontWeight="Bold" Padding="10" Margin="0,0,0,10"/>
+
+                    <Button Content="SMAZAT" Command="{Binding SmazatCommand}" 
+                            Background="#E53935" Foreground="White" FontWeight="Bold" Padding="10"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>
