@@ -6,6 +6,7 @@
         public int Id { get; set; }         // Sloupec ITEM_ID
         public string Nazev { get; set; }   // Sloupec NAME
         public decimal Cena { get; set; }   // Sloupec PRICE
+        public string Stitek { get; set; }
     }
 
     // Pomocná třída pro položku v pravém seznamu (košíku)

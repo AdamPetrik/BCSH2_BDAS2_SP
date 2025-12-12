@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="399013D5-55B4-4F0E-8DCF-967CCA7B5FDA" name="ITEM">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="D883E5CE-0BFE-1186-7D16-C53F68EA7774" name="PRICE_HISTORY">
 <createdBy>Adam Petřík</createdBy>
-<createdTime>2025-11-02 18:35:47 UTC</createdTime>
+<createdTime>2025-12-12 10:05:24 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
 <shouldEngineer>false</shouldEngineer>
 <engineerTo>
@@ -16,9 +16,9 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="item_id" id="5ED339C3-8E33-16AC-FB41-F4A675A2958C">
+<Attribute name="HISTORY_ID" id="B42215A3-2453-A660-1106-91AEAB9AA95C">
 <createdBy>Adam Petřík</createdBy>
-<createdTime>2025-11-02 18:35:52 UTC</createdTime>
+<createdTime>2025-12-12 10:05:46 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
 <shouldEngineer>false</shouldEngineer>
 <engineerTo>
@@ -29,69 +29,72 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="name" id="77AD5B27-9655-699C-2D3D-67DAC715B9E6">
+<Attribute name="item_id" id="6E3E16AA-7C30-7091-3933-96DF8A508886">
 <createdBy>Adam Petřík</createdBy>
-<createdTime>2025-11-02 18:36:17 UTC</createdTime>
+<createdTime>2025-12-12 10:08:00 UTC</createdTime>
+<generatorID>E62FA3DE-9A31-42A6-3D72-D6EA93AD9D5B</generatorID>
 <ownerDesignName>model</ownerDesignName>
-<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
 </engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>50</dataTypeSize>
-<ownDataTypeParameters>50,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="price" id="71B1CFF2-FC96-B618-731D-C573970562CF">
-<createdBy>Adam Petřík</createdBy>
-<createdTime>2025-11-02 18:36:02 UTC</createdTime>
-<ownerDesignName>model</ownerDesignName>
-<shouldEngineer>false</shouldEngineer>
-<engineerTo>
-<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
-</engineerTo>
-<constraintName>item_price_range_constraint</constraintName>
+<referedAttribute>5ED339C3-8E33-16AC-FB41-F4A675A2958C</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<listOfRanges>
-<rangeDef class="oracle.dbtools.crest.model.design.constraint.AVT">
-<beginValue>0</beginValue>
-</rangeDef>
-</listOfRanges>
 </Attribute>
-<Attribute name="image_id" id="F9577224-AEE0-524E-4134-A56A5FAE1D77">
+<Attribute name="OLD_PRICE" id="149DF7D5-53C3-2B47-94AA-E6F06D5C23CE">
 <createdBy>Adam Petřík</createdBy>
-<createdTime>2025-12-05 15:56:10 UTC</createdTime>
-<generatorID>AE313B11-03FB-B23F-90A9-CC594EFFA61C</generatorID>
+<createdTime>2025-12-12 10:06:07 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
 <shouldEngineer>false</shouldEngineer>
 <engineerTo>
 <item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
 </engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<referedAttribute>D4C11390-831A-9138-00F3-0A5DAF5C3125</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="NEW_PRICE" id="CCEFB55B-5CB8-004A-AF5F-F6F8CEAB11A7">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-12 10:06:49 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="CHANGE_DATE" id="E880719B-3E8D-6475-D79F-6E7B4EC47430">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-12 10:07:08 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="7AC5833C-2CEF-CBA0-6959-0B4249BC285B" name="ITEM_PK">
+<identifier id="EEEED2E7-D4E7-AE81-323A-3F4431FE97E9" name="PRICE_HISTORY PK">
 <createdBy>Adam Petřík</createdBy>
-<createdTime>2025-11-02 18:35:59 UTC</createdTime>
+<createdTime>2025-12-12 10:06:00 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
 <shouldEngineer>false</shouldEngineer>
 <engineerTo>
 <item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="false"/>
 </engineerTo>
 <pk>true</pk>
-<newElementsIDs>5ED339C3-8E33-16AC-FB41-F4A675A2958C</newElementsIDs>
 <usedAttributes>
-<attributeRef>5ED339C3-8E33-16AC-FB41-F4A675A2958C</attributeRef>
+<attributeRef>B42215A3-2453-A660-1106-91AEAB9AA95C</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

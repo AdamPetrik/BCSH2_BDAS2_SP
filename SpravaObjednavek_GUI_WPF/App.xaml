@@ -21,5 +21,7 @@
         <DataTemplate DataType="{x:Type vm:AlergenyViewModel}">
             <view:AlergenyView/>
         </DataTemplate>
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Application.Resources>
 </Application>

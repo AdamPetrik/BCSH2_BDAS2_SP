@@ -114,6 +114,18 @@
 <ownDataTypeParameters>64,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="ITEM_item_id" id="5F2CB66B-AB45-B735-676A-2BE7A251CEB0">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-12 10:08:43 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="4799C9B3-9D75-62DD-1D1E-0CFA9658BD82" name="IMAGE_PK">
@@ -128,13 +140,16 @@
 <colUsage columnID="2F45BC9A-CFC8-4E83-B6F0-36EB4283FB6D"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="E38B4AD3-C259-48F6-5684-8FE8A17C0991" name="IMAGE_ITEM_FK">
+<ind_PK_UK id="0D582AB0-ABA8-6ACE-F8A5-289C016F3478" name="IMAGE__IDX">
 <createdBy>Adam Petřík</createdBy>
-<createdTime>2025-12-09 15:26:33 UTC</createdTime>
-<generatorID>AE313B11-03FB-B23F-90A9-CC594EFFA61C</generatorID>
+<createdTime>2025-12-12 10:08:43 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
-<indexState>Foreign Key</indexState>
+<indexState>Unique Plain Index</indexState>
 <isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>AE313B11-03FB-B23F-90A9-CC594EFFA61C</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="5F2CB66B-AB45-B735-676A-2BE7A251CEB0"/>
+</indexColumnUsage>
 </ind_PK_UK>
 </indexes>
 </Table>

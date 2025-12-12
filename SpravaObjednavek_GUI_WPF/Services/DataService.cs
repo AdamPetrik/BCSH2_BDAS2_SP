@@ -6,6 +6,7 @@ using System.Data;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Windows.Media.Imaging;
 
 namespace SpravaObjednavek_GUI_WPF.Services
 {
@@ -14,39 +15,42 @@ namespace SpravaObjednavek_GUI_WPF.Services
         // Metoda pro načtení položek menu
         public List<PolozkaMenu> NacistMenuZDatabaze()
         {
-            var polozky = new List<PolozkaMenu>();
+            var list = new List<PolozkaMenu>();
 
-            // Získáme connection (předpokládám, že tvůj DatabaseConnection.GetConnection() vrací správný string)
             using (OracleConnection conn = DatabaseConnection.GetConnection())
             {
-                try
-                {
-                    conn.Open();
-                    string sql = "SELECT ITEM_ID, NAME, PRICE FROM ITEM ORDER BY NAME";
+                conn.Open();
 
-                    using (OracleCommand cmd = new OracleCommand(sql, conn))
+                // ZMĚNA SQL: Přidali jsme volání funkce FN_GET_ITEM_LABEL
+                string sql = @"
+            SELECT 
+                ITEM_ID, 
+                NAME, 
+                PRICE, 
+                FN_GET_ITEM_LABEL(ITEM_ID) AS MARKETING_LABEL 
+            FROM ITEM 
+            ORDER BY NAME";
+
+                using (OracleCommand cmd = new OracleCommand(sql, conn))
+                {
                     using (OracleDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            polozky.Add(new PolozkaMenu
+                            list.Add(new PolozkaMenu
                             {
-                                // Pozor na přetypování, Oracle vrací specifické typy
                                 Id = Convert.ToInt32(reader["ITEM_ID"]),
                                 Nazev = reader["NAME"].ToString(),
-                                Cena = Convert.ToDecimal(reader["PRICE"])
+                                Cena = Convert.ToDecimal(reader["PRICE"]),
+
+                                // Načtení výsledku funkce do vlastnosti Stitek
+                                Stitek = reader["MARKETING_LABEL"].ToString()
                             });
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    // Zde by bylo dobré logovat chybu nebo vyhodit výjimku
-                    System.Diagnostics.Debug.WriteLine("Chyba DB: " + ex.Message);
-                }
             }
-
-            return polozky;
+            return list;
         }
 
         public List<PolozkaAlergen> NacistAlergeny()
@@ -549,6 +553,56 @@ namespace SpravaObjednavek_GUI_WPF.Services
                             });
                         }
                     }
+                }
+            }
+            return list;
+        }
+
+        public List<PolozkaGalerie> NacistGalerii()
+        {
+            var list = new List<PolozkaGalerie>();
+
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    // Stahujeme jen data, žádné vytváření BitmapImage zde!
+                    string sql = @"
+                SELECT i.NAME, im.CONTENT, im.FILENAME, im.EXTENSION
+                FROM ITEM i
+                LEFT JOIN IMAGE im ON i.IMAGE_ID = im.IMAGE_ID
+                ORDER BY i.NAME";
+
+                    using (OracleCommand cmd = new OracleCommand(sql, conn))
+                    {
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var polozka = new PolozkaGalerie
+                                {
+                                    NazevJidla = reader["NAME"].ToString()
+                                };
+
+                                if (reader["CONTENT"] != DBNull.Value)
+                                {
+                                    // Jen uložíme surová data (byte[])
+                                    // Zbytek udělá ViewModel na hlavním vlákně
+                                    polozka.ObrazekData = (byte[])reader["CONTENT"];
+                                    polozka.NazevSouboru = reader["FILENAME"].ToString();
+                                    polozka.Pripona = reader["EXTENSION"].ToString();
+                                }
+
+                                list.Add(polozka);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Logovat chybu, ale nevyhazovat, ať vidíme aspoň zbytek
+                    System.Diagnostics.Debug.WriteLine("Chyba DB: " + ex.Message);
                 }
             }
             return list;

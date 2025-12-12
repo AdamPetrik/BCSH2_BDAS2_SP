@@ -1,0 +1,96 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B8A116A0-7063-5566-9EE0-2A651BBC992D" name="PRICE_HISTORY">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-12 10:08:43 UTC</createdTime>
+<generatorID>D883E5CE-0BFE-1186-7D16-C53F68EA7774</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="HISTORY_ID" id="2F94ABE1-6ADE-95E3-8509-AF57F3A72410">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-12 10:08:43 UTC</createdTime>
+<generatorID>B42215A3-2453-A660-1106-91AEAB9AA95C</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="item_id" id="CE229422-5C30-85C3-43F1-15BE22EF7842">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-12 10:08:43 UTC</createdTime>
+<generatorID>6E3E16AA-7C30-7091-3933-96DF8A508886</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="72821684-B1F3-D8B5-DF6C-B0B8D8BEAFF4" referredColumn="BF85D5CB-A21C-0B20-6BDD-1E09A61D5F7F"/>
+</associations>
+</Column>
+<Column name="OLD_PRICE" id="F402C13E-49B2-B457-C976-5577AB09CC15">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-12 10:08:43 UTC</createdTime>
+<generatorID>149DF7D5-53C3-2B47-94AA-E6F06D5C23CE</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NEW_PRICE" id="BE91C37C-A604-5FB2-C6A7-988321457C7C">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-12 10:08:43 UTC</createdTime>
+<generatorID>CCEFB55B-5CB8-004A-AF5F-F6F8CEAB11A7</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CHANGE_DATE" id="93A54DD4-631F-2EBC-253D-CAE073095C4C">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-12 10:08:43 UTC</createdTime>
+<generatorID>E880719B-3E8D-6475-D79F-6E7B4EC47430</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="29ECD7FA-F041-BB11-F5A9-A519CFE332D4" name="PRICE_HISTORY_PK">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-12 10:08:43 UTC</createdTime>
+<generatorID>EEEED2E7-D4E7-AE81-323A-3F4431FE97E9</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2F94ABE1-6ADE-95E3-8509-AF57F3A72410"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="AD177270-ED74-C944-E973-8D8DB755EE29" name="PRICE_HISTORY_ITEM_FK">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-12 10:08:43 UTC</createdTime>
+<generatorID>E62FA3DE-9A31-42A6-3D72-D6EA93AD9D5B</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="CE229422-5C30-85C3-43F1-15BE22EF7842"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

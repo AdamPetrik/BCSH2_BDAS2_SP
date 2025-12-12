@@ -1,15 +1,15 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="45169CE3-AFAD-173F-5EC8-E41BE2F72075" containerWithKeyObject="866E7527-928B-6305-A353-7358B0D37114" localFKIndex="E38B4AD3-C259-48F6-5684-8FE8A17C0991" name="IMAGE_ITEM_FK">
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="72821684-B1F3-D8B5-DF6C-B0B8D8BEAFF4" containerWithKeyObject="B8A116A0-7063-5566-9EE0-2A651BBC992D" localFKIndex="AD177270-ED74-C944-E973-8D8DB755EE29" name="PRICE_HISTORY_ITEM_FK">
 <createdBy>Adam Petřík</createdBy>
-<createdTime>2025-12-09 15:26:33 UTC</createdTime>
-<generatorID>AE313B11-03FB-B23F-90A9-CC594EFFA61C</generatorID>
+<createdTime>2025-12-12 10:08:43 UTC</createdTime>
+<generatorID>E62FA3DE-9A31-42A6-3D72-D6EA93AD9D5B</generatorID>
 <ownerDesignName>model</ownerDesignName>
 <referredTableLongName>ITEM</referredTableLongName>
 <deleteRule>NO ACTION</deleteRule>
 <referredTableID>3780A25D-B3BE-B13D-A0C9-4357E5EC877F</referredTableID>
 <keyObject>0BA1455D-B214-34DF-E4D0-234974B0ACC9</keyObject>
 <referredKeyID>0BA1455D-B214-34DF-E4D0-234974B0ACC9</referredKeyID>
-<mandatory>false</mandatory>
+<mandatory>true</mandatory>
 <refColNames>item_id</refColNames>
 <transferable>true</transferable>
 <rely>false</rely>

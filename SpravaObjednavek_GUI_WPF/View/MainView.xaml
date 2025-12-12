@@ -62,6 +62,10 @@
             <view:ObjednavkyView />
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type vm:GalerieViewModel}">
+            <view:GalerieView />
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type vm:StatistikyViewModel}">
             <view:StatistikyView />
         </DataTemplate>
@@ -111,11 +115,17 @@
                          Command="{Binding UpdateViewCommand}"
                          CommandParameter="Alergeny"/>
 
-                    <RadioButton Content="Historie objednávek"
+                    <RadioButton Content="Objednávky"
                          GroupName="Navigace"
                          Style="{StaticResource MenuButtonStyle}"
                          Command="{Binding UpdateViewCommand}"
                          CommandParameter="Objednavky"/>
+
+                    <RadioButton Content="Galerie"
+                        GroupName="Navigace"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Command="{Binding UpdateViewCommand}"
+                        CommandParameter="Galerie"/>
 
                     <RadioButton Content="Statistiky"
                         GroupName="Navigace"

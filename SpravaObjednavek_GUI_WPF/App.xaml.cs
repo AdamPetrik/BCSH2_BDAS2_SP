@@ -10,6 +10,17 @@ namespace SpravaObjednavek_GUI_WPF
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            this.DispatcherUnhandledException += App_DispatcherUnhandledException;
+        }
+
+        private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show("Kritická chyba aplikace:\n" + e.Exception.Message + "\n\n" + e.Exception.InnerException?.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+            e.Handled = true; // Zabrání pádu aplikace
+        }
+
         // Zde si globálně uložíme ID uživatele, jakmile se přihlásí
         public static int? PrihlasenyUzivatelId { get; set; }
         public static string PrihlasenyJmeno { get; set; }

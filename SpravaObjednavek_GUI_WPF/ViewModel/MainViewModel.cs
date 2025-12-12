@@ -54,6 +54,10 @@ namespace SpravaObjednavek_GUI_WPF
                         CurrentView = new ObjednavkyViewModel();
                         break;
 
+                    case "Galerie":
+                        CurrentView = new GalerieViewModel();
+                        break;
+
                     case "Statistiky":
                         CurrentView = new StatistikyViewModel();
                         break;
