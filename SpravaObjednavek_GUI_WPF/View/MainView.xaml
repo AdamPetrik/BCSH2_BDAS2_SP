@@ -107,7 +107,8 @@
                          Style="{StaticResource MenuButtonStyle}"
                          Command="{Binding UpdateViewCommand}"
                          CommandParameter="Kasa"
-                         IsChecked="True"/>
+                         IsChecked="True"
+                         IsEnabled="{Binding JePlnyPristup}"/>
 
                     <RadioButton Content="Alergeny"
                          GroupName="Navigace"
@@ -119,7 +120,8 @@
                          GroupName="Navigace"
                          Style="{StaticResource MenuButtonStyle}"
                          Command="{Binding UpdateViewCommand}"
-                         CommandParameter="Objednavky"/>
+                         CommandParameter="Objednavky"
+                         IsEnabled="{Binding JePlnyPristup}"/>
 
                     <RadioButton Content="Galerie"
                         GroupName="Navigace"
@@ -131,13 +133,15 @@
                         GroupName="Navigace"
                         Style="{StaticResource MenuButtonStyle}"
                         Command="{Binding UpdateViewCommand}"
-                        CommandParameter="Statistiky"/>
+                        CommandParameter="Statistiky"
+                        IsEnabled="{Binding JePlnyPristup}"/>
 
                     <RadioButton Content="Administrace"
                          GroupName="Navigace"
                          Style="{StaticResource MenuButtonStyle}"
                          Command="{Binding UpdateViewCommand}"
-                         CommandParameter="Administrace"/>
+                         CommandParameter="Administrace"
+                         IsEnabled="{Binding JePlnyPristup}"/>
                 </StackPanel>
 
             </DockPanel>

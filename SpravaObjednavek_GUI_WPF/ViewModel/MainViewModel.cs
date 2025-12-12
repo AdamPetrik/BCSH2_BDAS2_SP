@@ -5,6 +5,8 @@ namespace SpravaObjednavek_GUI_WPF
 {
     public class MainViewModel : ObservableObject
     {
+        public bool JePlnyPristup { get; set; }
+
         // Tato vlastnost drží aktuálně zobrazený ViewModel (stránku)
         private object _currentView;
         public object CurrentView
@@ -73,7 +75,19 @@ namespace SpravaObjednavek_GUI_WPF
             });
 
             // Výchozí stránka po spuštění
-            CurrentView = new KasaViewModel();
+            // Nastavíme hodnotu podle toho, co jsme uložili v App
+            JePlnyPristup = !App.JeHost;
+
+            // Výchozí pohled
+            if (App.JeHost)
+            {
+                // Host vidí jako první Alergeny (protože Kasu má zakázanou)
+                CurrentView = new AlergenyViewModel();
+            }
+            else
+            {
+                CurrentView = new KasaViewModel();
+            }
 
             NacistUzivatele();
         }

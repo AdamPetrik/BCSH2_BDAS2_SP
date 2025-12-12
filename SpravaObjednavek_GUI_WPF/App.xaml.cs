@@ -25,6 +25,8 @@ namespace SpravaObjednavek_GUI_WPF
         public static int? PrihlasenyUzivatelId { get; set; }
         public static string PrihlasenyJmeno { get; set; }
 
+        public static bool JeHost { get; set; } = false;
+
         // Tato metoda se spustí automaticky, když se aplikace zavírá (křížkem, Alt+F4...)
         protected override void OnExit(ExitEventArgs e)
         {

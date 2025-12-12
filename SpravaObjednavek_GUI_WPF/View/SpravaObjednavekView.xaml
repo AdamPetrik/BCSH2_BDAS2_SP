@@ -36,7 +36,6 @@
                   IsReadOnly="True" HeadersVisibility="Column" Background="White" Margin="20,0,20,20" BorderBrush="#DDD" BorderThickness="1">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
                 <DataGridTextColumn Header="Datum" Binding="{Binding Datum, StringFormat={}{0:dd.MM.yyyy HH:mm}}" Width="140"/>
                 <DataGridTextColumn Header="Obsluha" Binding="{Binding Obsluha}" Width="120"/>
                 <DataGridTextColumn Header="Cena" Binding="{Binding Cena, StringFormat={}{0:N0} Kč}" Width="80" FontWeight="Bold"/>

@@ -622,6 +622,67 @@ namespace SpravaObjednavek_GUI_WPF.Services
             }
         }
 
+        public List<PolozkaDetailu> NacistDetailObjednavky(int orderId)
+        {
+            var list = new List<PolozkaDetailu>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("GET_ORDER_DETAIL", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_order_id", OracleDbType.Int32).Value = orderId;
+                    cmd.Parameters.Add("p_results", OracleDbType.RefCursor).Direction = System.Data.ParameterDirection.Output;
+
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new PolozkaDetailu
+                            {
+                                Nazev = reader["NAME"].ToString(),
+                                Kusy = Convert.ToInt32(reader["QUANTITY"]),
+                                CenaKus = Convert.ToDecimal(reader["PRICE"]),
+                                Mezisoucet = Convert.ToDecimal(reader["SUBTOTAL"])
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        public List<PolozkaMenu> VyhledatVMenu(string text, decimal? maxCena)
+        {
+            var list = new List<PolozkaMenu>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("SEARCH_MENU", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_query", OracleDbType.Varchar2).Value = (object)text ?? DBNull.Value;
+                    cmd.Parameters.Add("p_max_price", OracleDbType.Int32).Value = (object)maxCena ?? DBNull.Value;
+                    cmd.Parameters.Add("p_results", OracleDbType.RefCursor).Direction = System.Data.ParameterDirection.Output;
+
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new PolozkaMenu
+                            {
+                                Id = Convert.ToInt32(reader["ITEM_ID"]),
+                                Nazev = reader["NAME"].ToString(),
+                                Cena = Convert.ToDecimal(reader["PRICE"])
+                                // Případně i ImageId atd.
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())

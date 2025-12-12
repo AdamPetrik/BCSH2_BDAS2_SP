@@ -18,8 +18,6 @@
                   AutoGenerateColumns="False" IsReadOnly="True"
                   BorderBrush="#DDD" BorderThickness="1">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="40"/>
-
                 <DataGridTextColumn Header="Info" Binding="{Binding Stitek}" Width="90" FontWeight="Bold" Foreground="#555"/>
 
                 <DataGridTextColumn Header="Název" Binding="{Binding Nazev}" Width="*"/>

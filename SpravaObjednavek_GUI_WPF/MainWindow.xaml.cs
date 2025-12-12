@@ -56,7 +56,11 @@ namespace SpravaObjednavek_GUI_WPF
 
         private void guestBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Host se neověřuje v DB
+            App.JeHost = true;
+            App.PrihlasenyJmeno = "Návštěvník";
+            App.PrihlasenyUzivatelId = null; // Nemá ID
+
+            // Otevřeme aplikaci stejně jako při přihlášení
             OtevritHlavniAplikaci();
         }
 

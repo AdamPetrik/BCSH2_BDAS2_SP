@@ -65,7 +65,6 @@
             </DataGrid.Resources>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
                 <DataGridTextColumn Header="Datum a čas" Binding="{Binding Datum, StringFormat={}{0:dd.MM.yyyy HH:mm}}" Width="150"/>
                 <DataGridTextColumn Header="Obsluha" Binding="{Binding Obsluha}" Width="150"/>
                 <DataGridTextColumn Header="Platba" Binding="{Binding ZpusobPlatby}" Width="100"/>
