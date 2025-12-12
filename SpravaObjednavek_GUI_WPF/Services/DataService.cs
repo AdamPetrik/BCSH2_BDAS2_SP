@@ -608,6 +608,20 @@ namespace SpravaObjednavek_GUI_WPF.Services
             return list;
         }
 
+        public void ZdrazitLevnaJidla(int procento)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("PLOSNE_ZDRAZENI_LEVNYCH_JIDEL", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_procento", OracleDbType.Int32).Value = procento;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())

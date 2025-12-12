@@ -12,6 +12,7 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
 
         // Seznam všech jídel
         public ObservableCollection<PolozkaMenu> SeznamPolozek { get; set; }
+        public ICommand ZdrazitCommand { get; set; }
 
         // Právě vybraná položka v tabulce
         private PolozkaMenu _vybranaPolozka;
@@ -58,6 +59,11 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
             UlozitZmenyCommand = new RelayCommand(UlozitZmeny);
             SmazatPolozkuCommand = new RelayCommand(SmazatPolozku);
             NacistCommand = new RelayCommand(o => NacistData());
+            ZdrazitCommand = new RelayCommand(o => {
+                _dataService.ZdrazitLevnaJidla(10);
+                MessageBox.Show("Levná jídla byla zdražena o 10%.");
+                NacistData();
+            });
 
             NacistData();
         }
