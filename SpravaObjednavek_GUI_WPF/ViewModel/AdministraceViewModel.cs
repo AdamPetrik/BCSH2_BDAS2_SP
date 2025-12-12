@@ -15,6 +15,7 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
         public SpravaLicenciViewModel SpravaLicenciVM { get; set; }
         public SpravaAlergenuViewModel SpravaAlergenuVM { get; set; }
         public SpravaObrazkuViewModel SpravaObrazkuVM { get; set; }
+        public HierarchieViewModel HierarchieVM { get; set; }
 
         public AdministraceViewModel()
         {
@@ -26,6 +27,7 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
             SpravaLicenciVM = new SpravaLicenciViewModel();
             SpravaAlergenuVM = new SpravaAlergenuViewModel();
             SpravaObrazkuVM = new SpravaObrazkuViewModel();
+            HierarchieVM = new HierarchieViewModel();
         }
     }
 }

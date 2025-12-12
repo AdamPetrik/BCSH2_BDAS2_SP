@@ -107,5 +107,18 @@
 <dataTypeSize>200</dataTypeSize>
 <ownDataTypeParameters>200,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="manager_id" id="D9BCC3E2-0868-E2BE-2129-4A220C79CD6A">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-12 14:46:11 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="5C50CD24-1D69-176E-C1EE-2E25A43D1D2D" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 </Entity>

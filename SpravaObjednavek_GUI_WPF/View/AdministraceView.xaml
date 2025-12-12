@@ -40,6 +40,9 @@
             <TabItem Header="Správa Obrázků">
                 <view:SpravaObrazkuView DataContext="{Binding SpravaObrazkuVM}"/>
             </TabItem>
+            <TabItem Header="Struktura týmu">
+                <view:HiearchieView DataContext="{Binding HierarchieVM}"/>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

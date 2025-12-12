@@ -998,6 +998,34 @@ namespace SpravaObjednavek_GUI_WPF.Services
             }
         }
 
+        public List<HierarchiePolozka> NacistHierarchii()
+        {
+            var list = new List<HierarchiePolozka>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("SELECT * FROM V_ORG_STRUKTURA", conn))
+                {
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new HierarchiePolozka
+                            {
+                                Uroven = Convert.ToInt32(reader["UROVEN"]),
+                                Jmeno = reader["JMENO"].ToString(),
+                                Role = reader["ROLE"].ToString(),
+                                StromZobrazeni = reader["STROM"].ToString(), // Tady už jsou mezery z DB
+                                Cesta = reader["CESTA"].ToString(),
+                                Sef = reader["SEF"] == DBNull.Value ? "-" : reader["SEF"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())
