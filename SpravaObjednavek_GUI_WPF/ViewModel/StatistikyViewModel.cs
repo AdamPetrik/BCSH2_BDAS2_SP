@@ -15,11 +15,17 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
         // Data pro druhý graf (Omáčky 16-18)
         public ObservableCollection<StatistikaItem> DataOmacky { get; set; }
 
+        public ObservableCollection<DenniTrzba> SeznamTrzeb { get; set; }
+        public ObservableCollection<VykonObsluhy> SeznamVykonu { get; set; }
+
         public StatistikyViewModel()
         {
             _dataService = new DataService();
             DataKebaby = new ObservableCollection<StatistikaItem>();
             DataOmacky = new ObservableCollection<StatistikaItem>();
+
+            SeznamTrzeb = new ObservableCollection<DenniTrzba>();
+            SeznamVykonu = new ObservableCollection<VykonObsluhy>();
 
             NacistData();
         }
@@ -39,6 +45,16 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
 
             DataOmacky.Clear();
             foreach (var o in omacky) DataOmacky.Add(o);
+
+            // 1. Denní tržby
+            var trzby = _dataService.NacistDenniTrzby();
+            SeznamTrzeb.Clear();
+            foreach (var t in trzby) SeznamTrzeb.Add(t);
+
+            // 2. Výkon obsluhy
+            var vykony = _dataService.NacistVykonObsluhy();
+            SeznamVykonu.Clear();
+            foreach (var v in vykony) SeznamVykonu.Add(v);
         }
 
         private void PrepocitatVyskuGrafu(List<StatistikaItem> data, double maxVyskaPixelu)

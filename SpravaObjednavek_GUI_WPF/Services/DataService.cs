@@ -503,6 +503,57 @@ namespace SpravaObjednavek_GUI_WPF.Services
             }
         }
 
+        public List<DenniTrzba> NacistDenniTrzby()
+        {
+            var list = new List<DenniTrzba>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                // Jednoduchý select z View
+                using (OracleCommand cmd = new OracleCommand("SELECT * FROM V_DENNI_TRZBY", conn))
+                {
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new DenniTrzba
+                            {
+                                Den = Convert.ToDateTime(reader["DEN"]),
+                                PocetObjednavek = Convert.ToInt32(reader["POCET_OBJEDNAVEK"]),
+                                CelkovaTrzba = Convert.ToDecimal(reader["CELKOVA_TRZBA"])
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        public List<VykonObsluhy> NacistVykonObsluhy()
+        {
+            var list = new List<VykonObsluhy>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("SELECT * FROM V_VYKON_OBSLUHY", conn))
+                {
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new VykonObsluhy
+                            {
+                                Obsluha = reader["OBSLUHA"].ToString(),
+                                PocetObjednavek = Convert.ToInt32(reader["POCET_OBJEDNAVEK"]),
+                                CelkovaTrzba = Convert.ToDecimal(reader["CELKOVA_TRZBA"])
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())

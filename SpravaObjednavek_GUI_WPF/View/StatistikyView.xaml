@@ -39,8 +39,13 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Statistiky prodeje" FontSize="24" FontWeight="Light" Margin="10"/>
+
+                <TextBlock Text="Statistiky prodeje" FontSize="24" FontWeight="Light" Margin="10"/>
 
             <Border Grid.Row="1" Background="White" Margin="10" Padding="20" CornerRadius="5" BorderBrush="#DDD" BorderThickness="1">
                 <StackPanel>
@@ -73,6 +78,33 @@
                     </Border>
                 </StackPanel>
             </Border>
+
+            <Border Grid.Column="0" Background="White" Margin="0,0,10,0" Padding="15" CornerRadius="5" BorderBrush="#DDD" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="Historie tržeb (View)" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                    <DataGrid ItemsSource="{Binding SeznamTrzeb}" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" Height="200">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Datum" Binding="{Binding Den, StringFormat=dd.MM.yyyy}" Width="*"/>
+                            <DataGridTextColumn Header="Objednávek" Binding="{Binding PocetObjednavek}" Width="80"/>
+                            <DataGridTextColumn Header="Tržba" Binding="{Binding CelkovaTrzba, StringFormat={}{0:N0} Kč}" Width="80" FontWeight="Bold"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1" Background="White" Margin="10,0,0,0" Padding="15" CornerRadius="5" BorderBrush="#DDD" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="Výkon zaměstnanců (View)" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                    <DataGrid ItemsSource="{Binding SeznamVykonu}" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" Height="200">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Jméno" Binding="{Binding Obsluha}" Width="*"/>
+                            <DataGridTextColumn Header="Prodejů" Binding="{Binding PocetObjednavek}" Width="60"/>
+                            <DataGridTextColumn Header="Přinesl(a)" Binding="{Binding CelkovaTrzba, StringFormat={}{0:N0} Kč}" Width="80" FontWeight="Bold"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+
         </Grid>
     </ScrollViewer>
 </UserControl>
