@@ -37,6 +37,9 @@
             <TabItem Header="Správa Alergenů">
                 <view:SpravaAlergenuView DataContext="{Binding SpravaAlergenuVM}"/>
             </TabItem>
+            <TabItem Header="Správa Obrázků">
+                <view:SpravaObrazkuView DataContext="{Binding SpravaObrazkuVM}"/>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

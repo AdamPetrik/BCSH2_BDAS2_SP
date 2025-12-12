@@ -918,6 +918,86 @@ namespace SpravaObjednavek_GUI_WPF.Services
             }
         }
 
+        // 1. Načíst seznam (jen metadata, žádný BLOB = rychlé)
+        public List<ObrazekMeta> NacistSeznamObrazku()
+        {
+            var list = new List<ObrazekMeta>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "SELECT IMAGE_ID, FILENAME, EXTENSION, UPLOADED_BY, UPLOADED_AT FROM IMAGE ORDER BY UPLOADED_AT DESC";
+                using (OracleCommand cmd = new OracleCommand(sql, conn))
+                {
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new ObrazekMeta
+                            {
+                                Id = Convert.ToInt32(reader["IMAGE_ID"]),
+                                NazevSouboru = reader["FILENAME"].ToString(),
+                                Pripona = reader["EXTENSION"].ToString(),
+                                Autor = reader["UPLOADED_BY"].ToString(),
+                                NahranoKdy = Convert.ToDateTime(reader["UPLOADED_AT"])
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        // 2. Načíst BLOB pro jeden obrázek (pro náhled)
+        public byte[] NacistDataObrazku(int imageId)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "SELECT CONTENT FROM IMAGE WHERE IMAGE_ID = :id";
+                using (OracleCommand cmd = new OracleCommand(sql, conn))
+                {
+                    cmd.Parameters.Add("id", OracleDbType.Int32).Value = imageId;
+                    var result = cmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        return (byte[])result;
+                    }
+                }
+            }
+            return null;
+        }
+
+        // 3. Upravit název
+        public void UpravitObrazek(int id, string novyNazev)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("UPDATE_IMAGE_METADATA", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_id", OracleDbType.Int32).Value = id;
+                    cmd.Parameters.Add("p_filename", OracleDbType.Varchar2).Value = novyNazev;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // 4. Smazat
+        public void SmazatObrazek(int id)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("DELETE_IMAGE", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_id", OracleDbType.Int32).Value = id;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())
