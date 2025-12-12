@@ -1026,6 +1026,54 @@ namespace SpravaObjednavek_GUI_WPF.Services
             return list;
         }
 
+        // 1. Načíst všechny uživatele (pro tabulku)
+        public List<UzivatelPrehled> NacistVsechnyUzivatele()
+        {
+            var list = new List<UzivatelPrehled>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                // Spojíme USER a LOGIN_CREDS, abychom měli jména
+                string sql = @"
+            SELECT u.USER_ID, lc.USER_NAME, u.USER_TYPE 
+            FROM ""USER"" u
+            JOIN LOGIN_CREDS lc ON u.USER_ID = lc.USER_ID
+            ORDER BY u.USER_ID";
+
+                using (OracleCommand cmd = new OracleCommand(sql, conn))
+                {
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new UzivatelPrehled
+                            {
+                                Id = Convert.ToInt32(reader["USER_ID"]),
+                                Jmeno = reader["USER_NAME"].ToString(),
+                                Role = reader["USER_TYPE"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        // 2. Vynutit přihlášení (Emulace)
+        public void EmulovatUzivatele(int userId)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("FORCE_LOGIN", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_user_id", OracleDbType.Int32).Value = userId;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())

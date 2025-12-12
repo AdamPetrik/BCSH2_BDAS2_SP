@@ -43,6 +43,9 @@
             <TabItem Header="Struktura týmu">
                 <view:HiearchieView DataContext="{Binding HierarchieVM}"/>
             </TabItem>
+            <TabItem Header="Emulace">
+                <view:SpravaUzivateluView DataContext="{Binding SpravaUzivateluVM}"/>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

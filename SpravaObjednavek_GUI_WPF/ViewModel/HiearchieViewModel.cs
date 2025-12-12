@@ -23,7 +23,6 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
             var data = _dataService.NacistHierarchii();
             Struktura.Clear();
             foreach (var item in data) Struktura.Add(item);
-            MessageBox.Show("Načteno položek: " + Struktura.Count);
         }
     }
 }
