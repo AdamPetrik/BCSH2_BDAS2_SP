@@ -46,6 +46,9 @@
             <TabItem Header="Emulace">
                 <view:SpravaUzivateluView DataContext="{Binding SpravaUzivateluVM}"/>
             </TabItem>
+            <TabItem Header="Databázové objekty">
+                <view:SchemaView DataContext="{Binding SchemaVM}"/>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

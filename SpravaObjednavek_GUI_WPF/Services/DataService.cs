@@ -1074,6 +1074,35 @@ namespace SpravaObjednavek_GUI_WPF.Services
             }
         }
 
+        public List<DatabazovyObjekt> NacistSchéma()
+        {
+            var list = new List<DatabazovyObjekt>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("GET_SCHEMA_OBJECTS", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_results", OracleDbType.RefCursor).Direction = System.Data.ParameterDirection.Output;
+
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new DatabazovyObjekt
+                            {
+                                Typ = reader["TYP"].ToString(),
+                                Jmeno = reader["JMENO"].ToString(),
+                                // Ošetření NULL hodnoty u sekvencí
+                                DatumVytvoreni = reader["DATUM_VYTVORENI"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["DATUM_VYTVORENI"])
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())
