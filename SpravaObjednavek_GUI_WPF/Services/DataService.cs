@@ -1320,6 +1320,36 @@ namespace SpravaObjednavek_GUI_WPF.Services
             }
         }
 
+        public List<LogZaznam> NacistSystemoveLogy()
+        {
+            var list = new List<LogZaznam>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("GET_SYSTEM_LOGS", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_results", OracleDbType.RefCursor).Direction = System.Data.ParameterDirection.Output;
+
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new LogZaznam
+                            {
+                                Id = Convert.ToInt32(reader["log_id"]),
+                                Cas = Convert.ToDateTime(reader["time"]),
+                                Akce = reader["action"].ToString(),
+                                Tabulka = reader["table_name"].ToString(),
+                                Uzivatel = reader["user_name"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())

@@ -52,6 +52,9 @@
             <TabItem Header="Zprávy">
                 <view:AdminZpravyView DataContext="{Binding AdminZpravyVM}"/>
             </TabItem>
+            <TabItem Header="Log">
+                <view:LogView DataContext="{Binding LogVM}"/>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

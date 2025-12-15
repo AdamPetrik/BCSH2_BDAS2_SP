@@ -14,6 +14,7 @@
         public SpravaUzivateluViewModel SpravaUzivateluVM { get; set; }
         public SchemaViewModel SchemaVM { get; set; }
         public AdminZpravyViewModel AdminZpravyVM { get; set; }
+        public LogViewModel LogVM { get; set; }
 
         public AdministraceViewModel()
         {
@@ -29,6 +30,7 @@
             SpravaUzivateluVM = new SpravaUzivateluViewModel();
             SchemaVM = new SchemaViewModel();
             AdminZpravyVM = new AdminZpravyViewModel();
+            LogVM = new LogViewModel();
         }
     }
 }
