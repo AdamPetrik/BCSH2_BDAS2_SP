@@ -1,0 +1,110 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5BC1B07E-6680-569E-13B6-1472CE2B9DAB" name="MESSAGE">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-15 14:13:54 UTC</createdTime>
+<generatorID>E5BD463C-9A08-51F0-FA08-07986E949645</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="message_id" id="5212508A-4149-E22D-5E85-AF3E9A6DF612">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-15 14:13:54 UTC</createdTime>
+<generatorID>DB266589-771D-5D54-5E8A-EAD885D3AF55</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="date" id="C25A31C8-B7F4-DCFC-29EE-4E5A8120F69F">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-15 14:13:54 UTC</createdTime>
+<generatorID>9A498177-07B2-EFC7-183A-CB9D23E8232A</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="sender_id" id="2CC3F900-CAA1-7B4D-51D8-78F0D512E012">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-15 14:13:54 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6B2B259D-ED27-5350-6FFE-85C562558FEC" referredColumn="DB3A4961-E099-B06F-52F3-89DEFF976673"/>
+</associations>
+</Column>
+<Column name="receiver_id" id="0AB03408-EF85-B97D-80A4-B425463D5554">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-15 14:13:54 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="3BC24236-7BBF-84CB-A42B-AAB8DC1C48F2" referredColumn="DB3A4961-E099-B06F-52F3-89DEFF976673"/>
+</associations>
+</Column>
+<Column name="content" id="DC3FCFFF-CE10-2022-2BDD-810E1AB47075">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-15 14:13:54 UTC</createdTime>
+<generatorID>AB514A5C-6D8A-A91A-3674-2F58F1CD72E0</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="7D2C8CDF-7023-7D78-E8C8-8868DBBB08B5" name="MESSAGE_PK">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-15 14:13:54 UTC</createdTime>
+<generatorID>F50647E6-4B1C-B983-C8A1-A53F03B1FF5C</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5212508A-4149-E22D-5E85-AF3E9A6DF612"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="78924002-209B-1525-D9F0-6B5D7D4D49AE" name="MESSAGE_USER_FK">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-15 14:13:54 UTC</createdTime>
+<generatorID>E7417EDC-4977-6107-C193-1F5FF365AD23</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2CC3F900-CAA1-7B4D-51D8-78F0D512E012"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7E093330-8A97-B3A1-F1EB-40617D0A369C" name="MESSAGE_USER_FKv2">
+<createdBy>Adam Petřík</createdBy>
+<createdTime>2025-12-15 14:13:54 UTC</createdTime>
+<generatorID>1909BD2D-2290-A582-6F49-E80E260B5F07</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0AB03408-EF85-B97D-80A4-B425463D5554"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
