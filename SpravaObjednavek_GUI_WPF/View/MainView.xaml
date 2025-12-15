@@ -66,6 +66,10 @@
             <view:GalerieView />
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type vm:ZpravyViewModel}">
+            <view:ZpravyView/>
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type vm:StatistikyViewModel}">
             <view:StatistikyView />
         </DataTemplate>
@@ -128,6 +132,13 @@
                         Style="{StaticResource MenuButtonStyle}"
                         Command="{Binding UpdateViewCommand}"
                         CommandParameter="Galerie"/>
+
+                    <RadioButton Content="Zprávy"
+                        GroupName="Navigace"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Command="{Binding UpdateViewCommand}"
+                        CommandParameter="Zpravy"
+                        IsEnabled="{Binding JeRegistrovany}"/>
 
                     <RadioButton Content="Statistiky"
                         GroupName="Navigace"

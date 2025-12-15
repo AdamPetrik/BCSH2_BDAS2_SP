@@ -1105,6 +1105,85 @@ namespace SpravaObjednavek_GUI_WPF.Services
             }
         }
 
+        // 1. Odeslání zprávy
+        public void OdeslatZpravu(int senderId, int receiverId, string content)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("SEND_MESSAGE", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_sender_id", senderId);
+                    cmd.Parameters.Add("p_receiver_id", receiverId);
+                    cmd.Parameters.Add("p_content", content);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // 2. Načtení historie
+        public List<Zprava> NacistHistoriiChatu(int myId, int otherId)
+        {
+            var list = new List<Zprava>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("GET_CHAT_HISTORY", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_user1_id", myId);
+                    cmd.Parameters.Add("p_user2_id", otherId);
+                    cmd.Parameters.Add("p_results", OracleDbType.RefCursor).Direction = System.Data.ParameterDirection.Output;
+
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new Zprava
+                            {
+                                MessageId = Convert.ToInt32(reader["MESSAGE_ID"]),
+                                SentAt = Convert.ToDateTime(reader["SENT_AT"]),
+                                SenderId = Convert.ToInt32(reader["SENDER_ID"]),
+                                ReceiverId = Convert.ToInt32(reader["RECEIVER_ID"]),
+                                Content = reader["CONTENT"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        // 3. Seznam uživatelů pro chat (Všichni kromě mě)
+        public List<UzivatelPrehled> NacistUzivateleProChat(int myId)
+        {
+            var list = new List<UzivatelPrehled>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                // Načteme ID a Jméno všech ostatních
+                string sql = "SELECT USER_ID, USER_NAME FROM \"USER\" JOIN LOGIN_CREDS USING(USER_ID) WHERE USER_ID != :myId";
+
+                using (OracleCommand cmd = new OracleCommand(sql, conn))
+                {
+                    cmd.Parameters.Add("myId", myId);
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new UzivatelPrehled
+                            {
+                                Id = Convert.ToInt32(reader["USER_ID"]),
+                                Jmeno = reader["USER_NAME"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())
