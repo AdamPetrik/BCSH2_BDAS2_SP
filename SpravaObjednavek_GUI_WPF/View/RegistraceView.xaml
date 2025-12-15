@@ -33,6 +33,12 @@
                           DisplayMemberPath="CelaAdresa"
                           Padding="5" Margin="0,0,0,15"/>
 
+                <TextBlock Text="Nadřízený manažer (volitelné)" Foreground="Gray" Margin="0,0,0,5"/>
+                <ComboBox ItemsSource="{Binding SeznamManazeru}" 
+                          SelectedItem="{Binding VybranyManazer}"
+                          DisplayMemberPath="Jmeno"
+                          Padding="5" Margin="0,0,0,15"/>
+
                 <TextBlock Text="Poznámka" Foreground="Gray" Margin="0,0,0,5"/>
                 <TextBox Text="{Binding Poznamka, UpdateSourceTrigger=PropertyChanged}" Padding="5" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20"/>
 

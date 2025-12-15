@@ -36,6 +36,15 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
             set { _vybranaLicence = value; OnPropertyChanged(); }
         }
 
+        public ObservableCollection<Manazer> SeznamManazeru { get; set; }
+
+        private Manazer _vybranyManazer;
+        public Manazer VybranyManazer
+        {
+            get => _vybranyManazer;
+            set { _vybranyManazer = value; OnPropertyChanged(); }
+        }
+
         public ICommand RegistrovatCommand { get; set; }
 
         public RegistraceViewModel()
@@ -46,6 +55,8 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
 
             DostupneRole = new ObservableCollection<string> { "USER", "ADMINISTRATOR" };
             VybranaRole = "USER";
+
+            SeznamManazeru = new ObservableCollection<Manazer>();
 
             RegistrovatCommand = new RelayCommand(Registrovat);
 
@@ -66,6 +77,11 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
                 var licence = _dataService.NacistVsechnyLicence();
                 SeznamLicenci.Clear();
                 foreach (var lic in licence) SeznamLicenci.Add(lic);
+
+                // 3. Manažeři
+                var manazeri = _dataService.NacistVsechnyManazery();
+                SeznamManazeru.Clear();
+                foreach (var m in manazeri) SeznamManazeru.Add(m);
             }
             catch (System.Exception ex)
             {
@@ -88,14 +104,16 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
 
             try
             {
+                int? managerId = VybranaLicence != null ? VybranyManazer.Id : (int?)null;
                 // ODESLÁNÍ DO DB:
                 // Bereme VybranaLicence.Id a VybranaAdresa.Id
                 _dataService.RegistrovatUzivatele(
                     Jmeno,
                     heslo,
                     VybranaRole,
-                    VybranaLicence.Id, // Změna zde
+                    VybranaLicence.Id,
                     VybranaAdresa.Id,
+                    managerId,
                     Poznamka
                 );
 

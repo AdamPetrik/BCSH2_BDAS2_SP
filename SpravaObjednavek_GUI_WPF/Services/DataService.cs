@@ -357,7 +357,7 @@ namespace SpravaObjednavek_GUI_WPF.Services
             return seznam;
         }
 
-        public void RegistrovatUzivatele(string jmeno, string heslo, string role, int licenseId, int addressId, string poznamka)
+        public void RegistrovatUzivatele(string jmeno, string heslo, string role, int licenseId, int addressId, int? managerId, string poznamka)
         {
             string hashHesla = VytvoritMD5(heslo);
 
@@ -368,14 +368,25 @@ namespace SpravaObjednavek_GUI_WPF.Services
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                    // Parametry musí sedět s názvy v proceduře
+                    // Parametry
                     cmd.Parameters.Add("p_username", OracleDbType.Varchar2).Value = jmeno;
                     cmd.Parameters.Add("p_password_hash", OracleDbType.Varchar2).Value = hashHesla;
                     cmd.Parameters.Add("p_role", OracleDbType.Varchar2).Value = role;
-
-                    // Nové parametry
                     cmd.Parameters.Add("p_license_id", OracleDbType.Int32).Value = licenseId;
                     cmd.Parameters.Add("p_address_id", OracleDbType.Int32).Value = addressId;
+
+                    // === NOVÉ: Logika pro Nullable ManagerID ===
+                    // Pokud je null, pošleme DBNull.Value, jinak pošleme číslo
+                    var paramManager = cmd.Parameters.Add("p_manager_id", OracleDbType.Int32);
+                    if (managerId.HasValue)
+                    {
+                        paramManager.Value = managerId.Value;
+                    }
+                    else
+                    {
+                        paramManager.Value = DBNull.Value;
+                    }
+
                     cmd.Parameters.Add("p_note", OracleDbType.Varchar2).Value = poznamka;
 
                     cmd.ExecuteNonQuery();
@@ -1209,6 +1220,32 @@ namespace SpravaObjednavek_GUI_WPF.Services
                                 Id = Convert.ToInt32(reader["license_id"]),
                                 TypLicence = reader["type"].ToString(),
                                 PlatnostDo = Convert.ToDateTime(reader["valid_till"])
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        public List<Manazer> NacistVsechnyManazery()
+        {
+            var list = new List<Manazer>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                string sql = "SELECT user_id, user_name FROM login_creds ORDER BY user_name";
+
+                using (OracleCommand cmd = new OracleCommand(sql, conn))
+                {
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new Manazer
+                            {
+                                Id = Convert.ToInt32(reader["user_id"]),
+                                Jmeno = reader["user_name"].ToString()
                             });
                         }
                     }
