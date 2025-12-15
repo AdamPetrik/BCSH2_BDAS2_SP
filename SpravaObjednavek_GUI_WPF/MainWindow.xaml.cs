@@ -49,6 +49,10 @@ namespace SpravaObjednavek_GUI_WPF
                     // ... otevření hlavního okna ...
                     OtevritHlavniAplikaci();
                 }
+                else
+                {
+                    MessageBox.Show("Neplatné jméno nebo heslo.", "Chyba přihlášení", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             catch (Exception ex)
             {

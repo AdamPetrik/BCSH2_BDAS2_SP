@@ -19,7 +19,6 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
 
         public ObservableCollection<Licence> SeznamLicenci { get; set; }
 
-        // Data pro ComboBox (LITE, STANDARD, PREMIUM)
         public List<TypLicencePolozka> TypyLicenci { get; set; }
 
         // --- VLASTNOSTI FORMULÁŘE ---
@@ -76,12 +75,11 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
             _dataService = new DataService();
             SeznamLicenci = new ObservableCollection<Licence>();
 
-            // Inicializace číselníku (nemusíme tahat z DB, zadání je fixní)
             TypyLicenci = new List<TypLicencePolozka>
             {
-                new TypLicencePolozka { Id = 1, Nazev = "LITE" },
-                new TypLicencePolozka { Id = 2, Nazev = "STANDARD" },
-                new TypLicencePolozka { Id = 3, Nazev = "PREMIUM" }
+                new TypLicencePolozka { Id = 1, Nazev = "FRANCHISING" },
+                new TypLicencePolozka { Id = 2, Nazev = "TEST" },
+                new TypLicencePolozka { Id = 3, Nazev = "ORIGINAL" }
             };
 
             UlozitCommand = new RelayCommand(Ulozit);
@@ -101,11 +99,11 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
         private void Vycistit(object obj)
         {
             VybranaLicence = null;
-            EditOd = DateTime.Now; // Předvyplníme dnešek
-            EditDo = DateTime.Now.AddYears(1); // Předvyplníme rok dopředu
-            VybranyTyp = TypyLicenci[0]; // Předvyplníme LITE
+            EditOd = DateTime.Now;
+            EditDo = DateTime.Now.AddYears(1);
+            VybranyTyp = TypyLicenci[0];
 
-            OnPropertyChanged(nameof(VybranaLicence)); // Refresh
+            OnPropertyChanged(nameof(VybranaLicence));
         }
 
         private void Ulozit(object obj)

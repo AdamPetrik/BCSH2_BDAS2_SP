@@ -43,7 +43,7 @@
             <TabItem Header="Struktura týmu">
                 <view:HiearchieView DataContext="{Binding HierarchieVM}"/>
             </TabItem>
-            <TabItem Header="Emulace">
+            <TabItem Header="Správa uživatelů">
                 <view:SpravaUzivateluView DataContext="{Binding SpravaUzivateluVM}"/>
             </TabItem>
             <TabItem Header="Databázové objekty">

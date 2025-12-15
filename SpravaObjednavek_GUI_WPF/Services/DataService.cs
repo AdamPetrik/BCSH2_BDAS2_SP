@@ -1254,6 +1254,21 @@ namespace SpravaObjednavek_GUI_WPF.Services
             return list;
         }
 
+        public void SmazatUzivatele(int userId)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("DELETE_USER_AND_CREDS", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_user_id", OracleDbType.Int32).Value = userId;
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())

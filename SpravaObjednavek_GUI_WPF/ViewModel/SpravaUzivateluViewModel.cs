@@ -12,12 +12,14 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
         public ObservableCollection<UzivatelPrehled> SeznamUzivatelu { get; set; }
 
         public ICommand EmulovatCommand { get; set; }
+        public ICommand SmazatCommand { get; set; }
 
         public SpravaUzivateluViewModel()
         {
             _dataService = new DataService();
             SeznamUzivatelu = new ObservableCollection<UzivatelPrehled>();
             EmulovatCommand = new RelayCommand(Emulovat);
+            SmazatCommand = new RelayCommand(Smazat);
             NacistData();
         }
 
@@ -91,6 +93,40 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
                     {
                         // Detailní výpis chyby
                         MessageBox.Show($"Chyba při přepínání: {ex.Message}\nZdroj: {ex.Source}\n{ex.StackTrace}");
+                    }
+                }
+            }
+        }
+
+        private void Smazat(object parameter)
+        {
+            if (parameter is UzivatelPrehled uzivatel)
+            {
+                // Kontrola, abych si nesmazal sám sebe
+                if (uzivatel.Id == App.PrihlasenyUzivatelId)
+                {
+                    MessageBox.Show("Nemůžete smazat svůj vlastní účet, když jste přihlášen!", "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var res = MessageBox.Show($"Opravdu chcete smazat uživatele '{uzivatel.Jmeno}'?\n\nTato akce je nevratná a odstraní i přihlašovací údaje.",
+                                          "Smazat uživatele", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if (res == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        // 1. Smazání z Databáze
+                        _dataService.SmazatUzivatele(uzivatel.Id);
+
+                        // 2. Smazání z UI (DataGridu)
+                        SeznamUzivatelu.Remove(uzivatel);
+
+                        MessageBox.Show("Uživatel byl úspěšně smazán.");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Chyba při mazání: {ex.Message}\n\n(Pokud má uživatel již objednávky, nelze ho smazat kvůli historii dat.)", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
