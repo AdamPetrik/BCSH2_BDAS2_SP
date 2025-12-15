@@ -1184,6 +1184,39 @@ namespace SpravaObjednavek_GUI_WPF.Services
             return list;
         }
 
+        public List<LicenceV2> NacistVsechnyLicence()
+        {
+            var list = new List<LicenceV2>();
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+
+                // Spojíme tabulku LICENSE a LICENSE_TYPE, abychom viděli název typu
+                string sql = @"
+            SELECT l.license_id, lt.type, l.valid_till 
+            FROM LICENSE l 
+            JOIN LICENSE_TYPE lt ON l.license_type_id = lt.license_type_id
+            ORDER BY l.valid_till DESC"; // Seřazeno podle platnosti
+
+                using (OracleCommand cmd = new OracleCommand(sql, conn))
+                {
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new LicenceV2
+                            {
+                                Id = Convert.ToInt32(reader["license_id"]),
+                                TypLicence = reader["type"].ToString(),
+                                PlatnostDo = Convert.ToDateTime(reader["valid_till"])
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())

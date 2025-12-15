@@ -16,9 +16,9 @@ namespace SpravaObjednavek_GUI_WPF.Model
             {
                 switch (TypId)
                 {
-                    case 1: return "LITE";
-                    case 2: return "STANDARD";
-                    case 3: return "PREMIUM";
+                    case 1: return "FRANCHISING";
+                    case 2: return "TEST";
+                    case 3: return "ORIGINAL";
                     default: return "Neznámý";
                 }
             }

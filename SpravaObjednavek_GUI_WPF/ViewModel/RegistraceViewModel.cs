@@ -1,4 +1,5 @@
-﻿using SpravaObjednavek_GUI_WPF.Services;
+﻿using SpravaObjednavek_GUI_WPF.Model;
+using SpravaObjednavek_GUI_WPF.Services;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,33 +11,66 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
     {
         private readonly DataService _dataService;
 
-        // --- Existující vlastnosti ---
-        public string Jmeno { get; set; }
+        // --- Původní vlastnosti ---
+        public string Jmeno { get; set; } // + NotifyPropertyChanged (zkráceno pro přehlednost)
         public ObservableCollection<string> DostupneRole { get; set; }
         public string VybranaRole { get; set; }
+        public string Poznamka { get; set; } // + NotifyPropertyChanged
 
-        // --- NOVÉ VLASTNOSTI ---
-        // Používám string pro jednodušší binding v TextBoxu (aby tam nebylo defaultně 0)
-        public string LicenseIdInput { get; set; }
-        public string AddressIdInput { get; set; }
-        public string Poznamka { get; set; }
-        // -----------------------
+        // --- ADRESY (Už máme hotové) ---
+        public ObservableCollection<Adresa> SeznamAdres { get; set; }
+        private Adresa _vybranaAdresa;
+        public Adresa VybranaAdresa
+        {
+            get => _vybranaAdresa;
+            set { _vybranaAdresa = value; OnPropertyChanged(); }
+        }
+
+        // --- NOVÉ: LICENCE (Místo stringu LicenseIdInput) ---
+        public ObservableCollection<LicenceV2> SeznamLicenci { get; set; }
+
+        private LicenceV2 _vybranaLicence;
+        public LicenceV2 VybranaLicence
+        {
+            get => _vybranaLicence;
+            set { _vybranaLicence = value; OnPropertyChanged(); }
+        }
 
         public ICommand RegistrovatCommand { get; set; }
 
         public RegistraceViewModel()
         {
             _dataService = new DataService();
+            SeznamAdres = new ObservableCollection<Adresa>();
+            SeznamLicenci = new ObservableCollection<LicenceV2>(); // Inicializace
 
-            DostupneRole = new ObservableCollection<string>
-            {
-                "USER",
-                "ADMINISTRATOR"
-            };
-
+            DostupneRole = new ObservableCollection<string> { "USER", "ADMINISTRATOR" };
             VybranaRole = "USER";
-            
+
             RegistrovatCommand = new RelayCommand(Registrovat);
+
+            // Načtení dat do ComboBoxů
+            NacistCiselniky();
+        }
+
+        private void NacistCiselniky()
+        {
+            try
+            {
+                // 1. Adresy
+                var adresy = _dataService.NacistAdresy();
+                SeznamAdres.Clear();
+                foreach (var adr in adresy) SeznamAdres.Add(adr);
+
+                // 2. Licence (Voláme novou metodu)
+                var licence = _dataService.NacistVsechnyLicence();
+                SeznamLicenci.Clear();
+                foreach (var lic in licence) SeznamLicenci.Add(lic);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Chyba při načítání číselníků: " + ex.Message);
+            }
         }
 
         private void Registrovat(object parameter)
@@ -44,46 +78,39 @@ namespace SpravaObjednavek_GUI_WPF.ViewModel
             var passwordBox = parameter as PasswordBox;
             string heslo = passwordBox?.Password;
 
-            // 1. Validace povinných polí
+            // Validace: Kontrolujeme, zda je vybrána Adresa I Licence
             if (string.IsNullOrWhiteSpace(Jmeno) || string.IsNullOrWhiteSpace(heslo) ||
-                string.IsNullOrWhiteSpace(LicenseIdInput) || string.IsNullOrWhiteSpace(AddressIdInput))
+                VybranaAdresa == null || VybranaLicence == null)
             {
-                MessageBox.Show("Vyplňte všechna povinná pole (Jméno, Heslo, License ID, Address ID).", "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            // 2. Převod čísel
-            if (!int.TryParse(LicenseIdInput, out int licenseId) || !int.TryParse(AddressIdInput, out int addressId))
-            {
-                MessageBox.Show("License ID a Address ID musí být čísla.", "Chyba formátu", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Vyplňte jméno, heslo a vyberte Adresu i Licenci.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             try
             {
-                // Volání služby s novými parametry
-                _dataService.RegistrovatUzivatele(Jmeno, heslo, VybranaRole, licenseId, addressId, Poznamka);
+                // ODESLÁNÍ DO DB:
+                // Bereme VybranaLicence.Id a VybranaAdresa.Id
+                _dataService.RegistrovatUzivatele(
+                    Jmeno,
+                    heslo,
+                    VybranaRole,
+                    VybranaLicence.Id, // Změna zde
+                    VybranaAdresa.Id,
+                    Poznamka
+                );
 
-                MessageBox.Show($"Uživatel {Jmeno} byl úspěšně registrován.", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Uživatel {Jmeno} registrován.", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // Vyčištění formuláře
-                Jmeno = string.Empty;
-                OnPropertyChanged(nameof(Jmeno));
-
-                LicenseIdInput = string.Empty;
-                OnPropertyChanged(nameof(LicenseIdInput));
-
-                AddressIdInput = string.Empty;
-                OnPropertyChanged(nameof(AddressIdInput));
-
-                Poznamka = string.Empty;
-                OnPropertyChanged(nameof(Poznamka));
-
-                passwordBox.Password = string.Empty;
+                // Reset formuláře
+                Jmeno = string.Empty; OnPropertyChanged(nameof(Jmeno));
+                Poznamka = string.Empty; OnPropertyChanged(nameof(Poznamka));
+                VybranaAdresa = null;
+                VybranaLicence = null; // Reset licence
+                if (passwordBox != null) passwordBox.Password = string.Empty;
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show("Chyba při registraci: " + ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Chyba registrace: " + ex.Message);
             }
         }
     }

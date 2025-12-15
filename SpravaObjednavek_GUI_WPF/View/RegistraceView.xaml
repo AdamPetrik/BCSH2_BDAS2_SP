@@ -13,7 +13,7 @@
                 <TextBlock Text="Nový uživatel" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,20"/>
 
                 <TextBlock Text="Uživatelské jméno *" Foreground="Gray" Margin="0,0,0,5"/>
-                <TextBox Text="{Binding Jmeno}" Padding="5" Margin="0,0,0,15"/>
+                <TextBox Text="{Binding Jmeno, UpdateSourceTrigger=PropertyChanged}" Padding="5" Margin="0,0,0,15"/>
 
                 <TextBlock Text="Heslo *" Foreground="Gray" Margin="0,0,0,5"/>
                 <PasswordBox x:Name="HesloBox" Padding="5" Margin="0,0,0,15"/>
@@ -21,14 +21,20 @@
                 <TextBlock Text="Role *" Foreground="Gray" Margin="0,0,0,5"/>
                 <ComboBox ItemsSource="{Binding DostupneRole}" SelectedItem="{Binding VybranaRole}" Padding="5" Margin="0,0,0,15"/>
 
-                <TextBlock Text="License ID *" Foreground="Gray" Margin="0,0,0,5"/>
-                <TextBox Text="{Binding LicenseIdInput}" Padding="5" Margin="0,0,0,15"/>
+                <TextBlock Text="Licence *" Foreground="Gray" Margin="0,0,0,5"/>
+                <ComboBox ItemsSource="{Binding SeznamLicenci}" 
+                          SelectedItem="{Binding VybranaLicence}"
+                          DisplayMemberPath="CelkovyPopis"
+                          Padding="5" Margin="0,0,0,15"/>
 
-                <TextBlock Text="Address ID *" Foreground="Gray" Margin="0,0,0,5"/>
-                <TextBox Text="{Binding AddressIdInput}" Padding="5" Margin="0,0,0,15"/>
+                <TextBlock Text="Adresa *" Foreground="Gray" Margin="0,0,0,5"/>
+                <ComboBox ItemsSource="{Binding SeznamAdres}" 
+                          SelectedItem="{Binding VybranaAdresa}"
+                          DisplayMemberPath="CelaAdresa"
+                          Padding="5" Margin="0,0,0,15"/>
 
                 <TextBlock Text="Poznámka" Foreground="Gray" Margin="0,0,0,5"/>
-                <TextBox Text="{Binding Poznamka}" Padding="5" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20"/>
+                <TextBox Text="{Binding Poznamka, UpdateSourceTrigger=PropertyChanged}" Padding="5" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20"/>
 
                 <Button Content="REGISTROVAT" 
                         Command="{Binding RegistrovatCommand}"
