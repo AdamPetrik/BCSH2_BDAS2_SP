@@ -49,6 +49,9 @@
             <TabItem Header="Databázové objekty">
                 <view:SchemaView DataContext="{Binding SchemaVM}"/>
             </TabItem>
+            <TabItem Header="Zprávy">
+                <view:AdminZpravyView DataContext="{Binding AdminZpravyVM}"/>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

@@ -1269,6 +1269,57 @@ namespace SpravaObjednavek_GUI_WPF.Services
             }
         }
 
+        // Získání všech zpráv
+        public List<AdminZprava> NacistVsechnyZpravyAdmin()
+        {
+            var list = new List<AdminZprava>();
+
+            // Vytvoření spojení
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+
+                // Vytvoření příkazu (zde definujeme 'cmd')
+                using (OracleCommand cmd = new OracleCommand("GET_ALL_MESSAGES_ADMIN", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_results", OracleDbType.RefCursor).Direction = System.Data.ParameterDirection.Output;
+
+                    // Teď už 'cmd' existuje a můžeme ho použít
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new AdminZprava
+                            {
+                                Id = Convert.ToInt32(reader["message_id"]), // Načtení ID pro mazání
+                                Cas = Convert.ToDateTime(reader["sent_at"]),
+                                Odesilatel = reader["sender_name"].ToString(),
+                                Prijemce = reader["receiver_name"].ToString(),
+                                Obsah = reader["content"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        // Smazání konkrétní zprávy
+        public void SmazatZpravu(int messageId)
+        {
+            using (OracleConnection conn = DatabaseConnection.GetConnection())
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("DELETE_MESSAGE", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_message_id", OracleDbType.Int32).Value = messageId;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private string VytvoritMD5(string vstup)
         {
             using (MD5 md5 = MD5.Create())
